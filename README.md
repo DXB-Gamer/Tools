@@ -1,5 +1,4 @@
-[Index.html](https://github.com/user-attachments/files/25692892/Index.html)
-<!DOCTYPE html>
+(https://github.com/user-attachments/files/25692892/Index.html)
 <html lang="en">
 <head>
 <meta charset="UTF-8">
