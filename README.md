@@ -1,4 +1,3 @@
-[GITHUBWEBSITE.html](https://github.com/user-attachments/files/25692771/GITHUBWEBSITE.html)
 <!DOCTYPE html>
 <html lang="en">
 <head>
