@@ -235,7 +235,7 @@ calculate();
   <a href="https://github.com/DXB-Gamer" target="_blank" class="profile-btn">Creator's Profile</a>
 
   <!-- # Designers/Artists Button (placeholder for later) -->
-  <!-- <a href="https://github.com/DesignerName" target="_blank" class="profile-btn">Designers Profile</a> -->
+  <!-- <a href="https://github.com/DesignerName" target="_blank" class="profile-btn">Creator's Profile</a> -->
 
   <style>
     .profile-btn {
