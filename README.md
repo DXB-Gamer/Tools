@@ -1,5 +1,13 @@
-<!-- # Your code -->
-  <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Website</title>
+</head>
+<body>
+
+  <!-- # Your code goes here -->
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -216,33 +224,32 @@ calculate();
 
 </body>
 </html>
+  <!-- # Our Team Section -->
+  <h2 style="color: #1e90ff; text-align: center; margin-top: 50px;">Our Team</h2>
 
-<!-- # Our Team Section -->
-<h2 style="color: #1e90ff; text-align: center; margin-top: 50px;">Our Team</h2>
+  <!-- # Developers Button -->
+  <a href="https://github.com/DXB-Gamer" target="_blank" class="profile-btn">Developers Profile</a>
 
-<!-- # Developers Button -->
-<a href="https://github.com/DXB-Gamer" target="_blank" class="profile-btn">The Creator's Profile</a>
+  <style>
+    .profile-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      border: 2px solid #1e90ff;
+      border-radius: 8px;
+      background: linear-gradient(90deg, rgba(30,144,255,0.2), rgba(30,144,255,0.1));
+      box-shadow: 0 0 10px #1e90ff, 0 0 20px #00ffff;
+      transition: all 0.3s ease;
+      margin: 10px;
+    }
+    .profile-btn:hover {
+      color: #00ffff;
+      box-shadow: 0 0 20px #1e90ff, 0 0 40px #00ffff, 0 0 60px #00ffff;
+      transform: scale(1.1);
+    }
+  </style>
 
-<!-- # Designers/Artists Button (placeholder for later) -->
-<!-- <a href="https://github.com/DesignerName" target="_blank" class="profile-btn">Designers Profile</a> -->
-
-<style>
-.profile-btn {
-  display: inline-block;
-  padding: 12px 25px;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-  border: 2px solid #1e90ff; /* outline like your code */
-  border-radius: 8px;
-  background: linear-gradient(90deg, rgba(30,144,255,0.2), rgba(30,144,255,0.1));
-  box-shadow: 0 0 10px #1e90ff, 0 0 20px #00ffff;
-  transition: all 0.3s ease;
-  margin: 10px; /* space between buttons */
-}
-.profile-btn:hover {
-  color: #00ffff;
-  box-shadow: 0 0 20px #1e90ff, 0 0 40px #00ffff, 0 0 60px #00ffff;
-  transform: scale(1.1);
-}
-</style>
+</body>
+</html>
