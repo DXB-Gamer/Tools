@@ -232,7 +232,7 @@ calculate();
   <h2 style="color: #1e90ff; text-align: center; margin-top: 50px;">Our Team</h2>
 
   <!-- # Developers Button -->
-  <a href="https://github.com/DXB-Gamer" target="_blank" class="profile-btn">Developers Profile</a>
+  <a href="https://github.com/DXB-Gamer" target="_blank" class="profile-btn">Creator's Profile</a>
 
   <!-- # Designers/Artists Button (placeholder for later) -->
   <!-- <a href="https://github.com/DesignerName" target="_blank" class="profile-btn">Designers Profile</a> -->
