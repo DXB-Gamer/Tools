@@ -1,15 +1,15 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pocket Money Tool</title>
+  <title>Pocket Money Tracker</title>
 
-  <!-- Favicon with PMT in white, bold, italic -->
-  <link rel="icon" href="/PMT-favicon.png" type="image/png">
-  <!-- ^ Replace /PMT-favicon.png with the path to your actual favicon file -->
+  <!-- Favicon with PMT in white, bold, italic, cache-busted -->
+  <link rel="icon" href="PMT-favicon.png?v=1" type="image/png">
 </head>
 <body>
 
-  <!-- # Your code -->
+  <!-- # Your Pocket Money Tracker code goes here -->
   <html lang="en">
 <head>
 <meta charset="UTF-8">
