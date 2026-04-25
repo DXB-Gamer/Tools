@@ -1,262 +1,796 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pocket Money Tracker</title>
+  <link rel="icon" id="faviconEl" href="" type="image/png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:#080808;--dark:#101010;--surface:#181818;--surface2:#202020;--surface3:#282828;
+      --border:#2a2a2a;--muted:#555;--white:#f0f0eb;--white-dim:#999;
+      --orange:#ff6b1a;--green:#22c55e;--blue:#3b82f6;--red:#ef4444;--yellow:#eab308;--purple:#a855f7;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+    body{font-family:'Syne',sans-serif;background:var(--black);color:var(--white);min-height:100vh;}
+    .topbar{position:sticky;top:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;height:54px;gap:8px;}
+    .logo{display:flex;align-items:center;gap:10px;margin-right:auto;}
+    .logo-mark{width:32px;height:32px;background:var(--orange);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:12px;color:#000;overflow:hidden;}
+    .logo-mark img{width:28px;height:28px;object-fit:cover;border-radius:5px;}
+    .logo-text{font-size:15px;font-weight:800;letter-spacing:-0.3px;}
+    .logo-badge{font-size:10px;font-family:'Space Mono',monospace;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px 6px;color:var(--muted);}
+    .nav-tabs{display:flex;gap:2px;}
+    .nav-tab{padding:5px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all 0.15s;}
+    .nav-tab.active{background:var(--surface2);color:var(--white);}
+    .nav-tab:hover:not(.active){color:var(--white-dim);}
+    .fav-btn{margin-left:8px;padding:5px 12px;background:var(--surface2);border:1px dashed var(--border);border-radius:7px;font-size:11px;font-family:'Space Mono',monospace;color:var(--muted);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+    .fav-btn:hover{border-color:var(--orange);color:var(--orange);}
+    .page{display:none;padding:24px;max-width:1200px;margin:0 auto;}
+    .page.active{display:block;}
+    .sec-title{font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+    .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+    .gauto{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:15px;padding:20px;transition:border-color 0.2s;}
+    .card:hover{border-color:#333;}
+    .ao{border-top:2px solid var(--orange);}.ag{border-top:2px solid var(--green);}.ab{border-top:2px solid var(--blue);}.ar{border-top:2px solid var(--red);}.ay{border-top:2px solid var(--yellow);}.ap{border-top:2px solid var(--purple);}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:16px 18px;}
+    .sl{font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+    .sv{font-size:20px;font-weight:800;margin-top:5px;}
+    .ss{font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:2px;}
+    .co{color:var(--orange);}.cg{color:var(--green);}.cb{color:var(--blue);}.cr{color:var(--red);}.cy{color:var(--yellow);}.cp{color:var(--purple);}
+    .field{margin-bottom:12px;}
+    .field label{display:block;font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;}
+    input[type="number"],input[type="text"],input[type="date"],select,textarea{width:100%;padding:9px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:'Space Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s;}
+    input:focus,select:focus,textarea:focus{border-color:var(--orange);}
+    select option{background:#1a1a1a;}textarea{resize:vertical;min-height:65px;}
+    .ir{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .ir3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+    .btn{padding:10px 18px;border:none;border-radius:9px;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;cursor:pointer;transition:all 0.12s;display:inline-block;}
+    .bf{width:100%;}.bo{background:var(--orange);color:#000;}.bo:hover{background:#ff8533;}.bg2{background:var(--green);color:#000;}.bg2:hover{background:#4ade80;}.bb{background:var(--blue);color:#fff;}.bb:hover{background:#60a5fa;}.br2{background:var(--red);color:#fff;}.br2:hover{background:#f87171;}
+    .bgh{background:var(--surface2);color:var(--white-dim);border:1px solid var(--border);}.bgh:hover{border-color:var(--muted);color:var(--white);}
+    .btn:active{transform:scale(0.97);}
+    .divider{border:none;border-top:1px solid var(--border);margin:16px 0;}
+    .exp-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;margin-bottom:7px;transition:border-color 0.15s;}
+    .exp-item:hover{border-color:var(--muted);}
+    .exp-cat{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+    .exp-info{flex:1;}
+    .exp-name{font-size:13px;font-weight:600;}
+    .exp-date{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;}
+    .exp-amt{font-size:15px;font-weight:800;font-family:'Space Mono',monospace;}
+    .exp-amt.income{color:var(--green);}.exp-amt.expense{color:var(--red);}
+    .del-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:17px;padding:3px 7px;border-radius:5px;}
+    .del-btn:hover{color:var(--red);background:rgba(239,68,68,0.1);}
+    .goal-item{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:14px;margin-bottom:9px;}
+    .goal-header{display:flex;justify-content:space-between;align-items:start;margin-bottom:9px;}
+    .goal-name{font-size:14px;font-weight:700;}
+    .goal-meta{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:2px;}
+    .prog-bar{background:var(--surface3);border-radius:100px;height:7px;overflow:hidden;}
+    .prog-fill{height:100%;border-radius:100px;transition:width 0.5s ease;}
+    .goal-amts{display:flex;justify-content:space-between;margin-top:7px;font-size:11px;font-family:'Space Mono',monospace;color:var(--muted);}
+    .rate-table{width:100%;border-collapse:collapse;}
+    .rate-table th{font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+    .rate-table td{padding:9px 10px;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace;font-size:12px;}
+    .rate-table tr:last-child td{border-bottom:none;}
+    .rate-table tr:hover td{background:var(--surface2);}
+    .ring-wrap{display:flex;align-items:center;gap:20px;}
+    .ring-chart{position:relative;width:110px;height:110px;flex-shrink:0;}
+    .ring-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+    .ring-pct{font-size:18px;font-weight:800;}
+    .ring-lbl{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;}
+    .legend-item{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-size:12px;}
+    .legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+    .badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;font-family:'Space Mono',monospace;}
+    .badge-green{background:rgba(34,197,94,0.15);color:var(--green);}
+    .badge-orange{background:rgba(255,107,26,0.15);color:var(--orange);}
+    .note-item{background:var(--surface2);border-left:3px solid var(--orange);border-radius:0 9px 9px 0;padding:11px 14px;margin-bottom:8px;}
+    .note-text{font-size:13px;line-height:1.5;}
+    .note-time{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:5px;}
+    .calc-display{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:14px;font-family:'Space Mono',monospace;font-size:26px;text-align:right;margin-bottom:12px;min-height:58px;word-break:break-all;}
+    .calc-expr{font-size:10px;color:var(--muted);margin-bottom:3px;min-height:12px;}
+    .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+    .cbtn{padding:12px 5px;border-radius:7px;border:1px solid var(--border);font-family:'Space Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.1s;background:var(--surface2);color:var(--white);}
+    .cbtn:hover{background:var(--surface3);border-color:var(--muted);}
+    .cbtn:active{transform:scale(0.93);}
+    .cbtn.op{color:var(--orange);background:var(--surface);}
+    .cbtn.eq{background:var(--orange);color:#000;border-color:var(--orange);}
+    .cbtn.clr{color:var(--red);}
+    .cbtn.mem{color:var(--blue);font-size:10px;}
+    .cbtn.s2{grid-column:span 2;}
+    .cbtn.s4{grid-column:span 4;}
+    .proj-tile{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+    .proj-lbl{font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;margin-bottom:5px;}
+    .proj-val{font-size:15px;font-weight:800;}
+    .color-field{text-align:center;}
+    .color-field label{display:block;font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;}
+    input[type="color"]{width:46px;height:46px;border:1px solid var(--border);border-radius:9px;padding:3px;background:var(--surface2);cursor:pointer;}
+    .settings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+    .team-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:15px;padding:20px 26px;margin-top:20px;}
+    .team-bar h2{font-size:17px;font-weight:800;}
+    .team-bar p{font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:2px;}
+    .team-link{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:1px solid var(--orange);border-radius:9px;color:var(--orange);text-decoration:none;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;transition:all 0.2s;}
+    .team-link:hover{background:var(--orange);color:#000;}
+    #toast{position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:10px 18px;font-size:12px;font-family:'Space Mono',monospace;opacity:0;transform:translateY(8px);transition:all 0.25s;pointer-events:none;z-index:999;}
+    #toast.show{opacity:1;transform:translateY(0);}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--black);}::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:99px;}
+    @media(max-width:768px){.g2,.g3,.g4{grid-template-columns:1fr;}.nav-tab span{display:none;}.page{padding:14px;}}
+  </style>
 </head>
 <body>
 
-  <!-- # Site Icon in Top Left -->
-  <img src="PUT YOUR PNG HERE" 
-       alt="PMT Icon" 
-       style="position: fixed; top: 10px; left: 10px; width: 50px; height: 50px; z-index: 1000;">
-
-  <!-- # Your Pocket Money Tracker code goes here -->
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pocket Money Pro</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-:root {
-    --bg-color: #0f0c1a;
-    --border-color: #00bfff;
-    --hover-border: #00ff7f;
-}
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: var(--bg-color);
-    color: white;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-}
-.container {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-.card, .calculator, .owsl, .settings {
-    background: #1e1a2b;
-    padding: 24px;
-    border-radius: 16px;
-    border: 2px solid var(--border-color);
-    box-shadow: 0 0 8px rgba(0,191,255,0.3);
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-.card:hover,
-.calculator:hover,
-.owsl:hover,
-.settings:hover {
-    border-color: var(--hover-border);
-    box-shadow: 0 0 18px var(--hover-border), 0 0 30px var(--hover-border);
-}
-.card { width: 430px; }
-.calculator { width: 260px; background: #1b2a44; }
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 8px;
-    border: none;
-    background: #2a2540;
-    color: white;
-}
-button {
-    width: 100%;
-    margin-top: 14px;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    background: #e85b78;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-canvas {
-    margin-top: 20px;
-    background: #241f38;
-    border-radius: 12px;
-}
-.calc-display {
-    background: #0d1b2a;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: right;
-    margin-bottom: 10px;
-}
-.calc-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-}
-.calc-btn {
-    padding: 10px;
-    background: #3b82f6;
-    border: none;
-    border-radius: 6px;
-    color: white;
-}
-.owsl, .settings {
-    margin-top: 25px;
-    width: 720px;
-}
-.settings-row {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-</style>
-</head>
-<body>
-
-<div class="container">
-
-<div class="card">
-    <h2>Pocket Money</h2>
-    <input type="number" id="monthlyMoney" value="50">
-    <select id="currency">
-        <option>AED</option><option>USD</option><option>CAD</option>
-        <option>EUR</option><option>GBP</option><option>PKR</option>
-        <option>INR</option><option>JPY</option><option>SAR</option>
-        <option>QAR</option><option>AUD</option>
-    </select>
-    <input type="text" id="convertTo" placeholder="Convert to any currency">
-    <button onclick="calculate()">Calculate</button>
-    <canvas id="moneyChart" height="200"></canvas>
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-mark" id="logoMark">PMT</div>
+    <div class="logo-text">Pocket Money Tracker</div>
+    <div class="logo-badge">v2.0</div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('dashboard')">📊 <span>Dashboard</span></button>
+    <button class="nav-tab" onclick="showPage('tracker')">💸 <span>Tracker</span></button>
+    <button class="nav-tab" onclick="showPage('goals')">🎯 <span>Goals</span></button>
+    <button class="nav-tab" onclick="showPage('converter')">💱 <span>Convert</span></button>
+    <button class="nav-tab" onclick="showPage('tools')">🔧 <span>Tools</span></button>
+    <button class="nav-tab" onclick="showPage('settings')">⚙️ <span>Settings</span></button>
+  </div>
+  <label class="fav-btn" for="faviconInput">🖼 Favicon</label>
+  <input type="file" id="faviconInput" accept="image/png,image/ico,image/jpeg" style="display:none" onchange="uploadFavicon(event)">
 </div>
 
-<div class="calculator">
-    <div class="calc-display" id="calcDisplay">0</div>
-    <div class="calc-grid">
-        <button class="calc-btn" onclick="press('7')">7</button>
-        <button class="calc-btn" onclick="press('8')">8</button>
-        <button class="calc-btn" onclick="press('9')">9</button>
-        <button class="calc-btn" onclick="press('/')">÷</button>
-        <button class="calc-btn" onclick="press('4')">4</button>
-        <button class="calc-btn" onclick="press('5')">5</button>
-        <button class="calc-btn" onclick="press('6')">6</button>
-        <button class="calc-btn" onclick="press('*')">×</button>
-        <button class="calc-btn" onclick="press('1')">1</button>
-        <button class="calc-btn" onclick="press('2')">2</button>
-        <button class="calc-btn" onclick="press('3')">3</button>
-        <button class="calc-btn" onclick="press('-')">−</button>
-        <button class="calc-btn" onclick="press('0')">0</button>
-        <button class="calc-btn" onclick="clearCalc()">C</button>
-        <button class="calc-btn" onclick="equals()">=</button>
-        <button class="calc-btn" onclick="press('+')">+</button>
+<!-- ══ DASHBOARD ══ -->
+<div class="page active" id="page-dashboard">
+  <div class="g4" style="margin-bottom:18px">
+    <div class="stat-card" style="border-top:2px solid var(--orange)"><div class="sl">Monthly</div><div class="sv co" id="dash-monthly">AED 50</div><div class="ss">pocket money</div></div>
+    <div class="stat-card" style="border-top:2px solid var(--green)"><div class="sl">Balance</div><div class="sv cg" id="dash-balance">AED 0</div><div class="ss">income − expenses</div></div>
+    <div class="stat-card" style="border-top:2px solid var(--red)"><div class="sl">Total Spent</div><div class="sv cr" id="dash-spent">AED 0</div><div class="ss">all expenses</div></div>
+    <div class="stat-card" style="border-top:2px solid var(--blue)"><div class="sl">Goal Saved</div><div class="sv cb" id="dash-saved">AED 0</div><div class="ss">toward goals</div></div>
+  </div>
+
+  <div class="g2" style="margin-bottom:18px">
+    <!-- PROJECTION -->
+    <div class="card ao">
+      <div class="sec-title">Savings Projection</div>
+      <div class="ir" style="margin-bottom:10px">
+        <div class="field" style="margin:0"><label>Monthly Amount</label><input type="number" id="monthlyMoney" value="50" oninput="calculate()"></div>
+        <div class="field" style="margin:0"><label>Currency</label>
+          <select id="currency" onchange="calculate()">
+            <option>AED</option><option>USD</option><option>CAD</option><option>EUR</option><option>GBP</option>
+            <option>PKR</option><option>INR</option><option>JPY</option><option>SAR</option><option>QAR</option>
+            <option>AUD</option><option>CHF</option><option>SGD</option><option>MYR</option><option>TRY</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Convert To (optional)</label><input type="text" id="convertTo" placeholder="e.g. USD, EUR, INR..." oninput="calculate()"></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px">
+        <div class="proj-tile"><div class="proj-lbl">1 Month</div><div class="proj-val co" id="p1m">—</div></div>
+        <div class="proj-tile"><div class="proj-lbl">3 Months</div><div class="proj-val cb" id="p3m">—</div></div>
+        <div class="proj-tile"><div class="proj-lbl">6 Months</div><div class="proj-val cg" id="p6m">—</div></div>
+        <div class="proj-tile"><div class="proj-lbl">1 Year</div><div class="proj-val cp" id="p12m">—</div></div>
+      </div>
+      <div style="position:relative;height:170px"><canvas id="moneyChart"></canvas></div>
     </div>
-</div>
 
-</div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <!-- BUDGET RING -->
+      <div class="card ar">
+        <div class="sec-title">Budget Usage</div>
+        <div class="ring-wrap">
+          <div class="ring-chart"><canvas id="ringChart" width="110" height="110"></canvas><div class="ring-center"><div class="ring-pct" id="ringPct">0%</div><div class="ring-lbl">used</div></div></div>
+          <div style="flex:1">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div><span style="font-size:12px">Spent: <strong id="leg-spent">0</strong></span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div><span style="font-size:12px">Left: <strong id="leg-left">0</strong></span></div>
+          </div>
+        </div>
+      </div>
 
-<div class="owsl">
-    <h3>OWSL(C) Translator</h3>
-    <input type="text" id="owslInput" placeholder="Enter English text">
-    <button onclick="translateOWSL()">Translate</button>
-    <p id="owslOutput"></p>
-</div>
+      <!-- QUICK ADD -->
+      <div class="card ag">
+        <div class="sec-title">Quick Add</div>
+        <div class="ir3" style="margin-bottom:9px">
+          <div class="field" style="margin:0"><label>Name</label><input type="text" id="q-name" placeholder="Coffee..."></div>
+          <div class="field" style="margin:0"><label>Amount</label><input type="number" id="q-amount" placeholder="10"></div>
+          <div class="field" style="margin:0"><label>Category</label>
+            <select id="q-cat">
+              <option value="🍔">🍔 Food</option><option value="🚌">🚌 Transport</option><option value="🎮">🎮 Games</option>
+              <option value="👗">👗 Clothes</option><option value="📚">📚 Education</option><option value="🎉">🎉 Fun</option>
+              <option value="🏥">🏥 Health</option><option value="🛍️">🛍️ Shopping</option><option value="✈️">✈️ Travel</option>
+              <option value="🎁">🎁 Gifts</option><option value="❓">❓ Other</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:7px">
+          <button class="btn br2" style="flex:1;font-size:12px" onclick="addExpense('expense')">− Expense</button>
+          <button class="btn bg2" style="flex:1;font-size:12px" onclick="addExpense('income')">+ Income</button>
+        </div>
+      </div>
 
-<div class="settings">
-    <h3>Appearance Settings</h3>
-    <div class="settings-row">
-        <label>Background</label>
-        <input type="color" onchange="setBG(this.value)">
-        <label>Border</label>
-        <input type="color" onchange="setBorder(this.value)">
-        <label>Hover</label>
-        <input type="color" onchange="setHover(this.value)">
+      <!-- TIP -->
+      <div class="card ab">
+        <div class="sec-title">💡 Money Tip</div>
+        <div id="tipBox" style="font-size:13px;line-height:1.6;color:var(--white-dim)">Loading...</div>
+        <button class="btn bgh bf" style="margin-top:10px;font-size:11px" onclick="nextTip()">Next Tip →</button>
+      </div>
     </div>
+  </div>
+
+  <!-- RECENT -->
+  <div class="card" style="margin-bottom:18px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px">
+      <div class="sec-title" style="margin:0">Recent Transactions</div>
+      <button class="btn bgh" style="padding:5px 12px;font-size:11px" onclick="showPage('tracker')">View All →</button>
+    </div>
+    <div id="recentList"><div style="color:var(--muted);font-size:12px;font-family:'Space Mono',monospace;padding:10px 0">No transactions yet.</div></div>
+  </div>
+
+  <!-- CAT CHART -->
+  <div class="card" style="margin-bottom:18px">
+    <div class="sec-title">Spending by Category</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center">
+      <div style="position:relative;height:200px"><canvas id="catChart"></canvas></div>
+      <div id="catLegend" style="font-size:12px"></div>
+    </div>
+  </div>
+
+  <div class="team-bar">
+    <div><h2>Built by DXB Gamer</h2><p>// open source · github.com/DXB-Gamer</p></div>
+    <a href="https://github.com/DXB-Gamer" target="_blank" class="team-link">↗ Developer Profile</a>
+  </div>
 </div>
+
+<!-- ══ TRACKER ══ -->
+<div class="page" id="page-tracker">
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card ao">
+      <div class="sec-title">Add Transaction</div>
+      <div class="ir">
+        <div class="field"><label>Name</label><input type="text" id="t-name" placeholder="e.g. Lunch, Salary..."></div>
+        <div class="field"><label>Amount</label><input type="number" id="t-amount" placeholder="0.00"></div>
+      </div>
+      <div class="ir">
+        <div class="field"><label>Category</label>
+          <select id="t-cat">
+            <option value="🍔">🍔 Food</option><option value="🚌">🚌 Transport</option><option value="🎮">🎮 Games</option>
+            <option value="👗">👗 Clothes</option><option value="📚">📚 Education</option><option value="🎉">🎉 Fun</option>
+            <option value="🏥">🏥 Health</option><option value="💡">💡 Utilities</option><option value="🛍️">🛍️ Shopping</option>
+            <option value="✈️">✈️ Travel</option><option value="🎁">🎁 Gifts</option><option value="💰">💰 Income</option><option value="❓">❓ Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Date</label><input type="date" id="t-date"></div>
+      </div>
+      <div class="field"><label>Note (optional)</label><input type="text" id="t-note" placeholder="Any notes..."></div>
+      <div style="display:flex;gap:7px">
+        <button class="btn br2" style="flex:1" onclick="addTx('expense')">− Expense</button>
+        <button class="btn bg2" style="flex:1" onclick="addTx('income')">+ Income</button>
+      </div>
+    </div>
+
+    <div class="card ab">
+      <div class="sec-title">Filter & Summary</div>
+      <div class="field"><label>Filter by Category</label>
+        <select id="filterCat" onchange="renderTransactions()">
+          <option value="all">All Categories</option><option value="🍔">🍔 Food</option><option value="🚌">🚌 Transport</option>
+          <option value="🎮">🎮 Games</option><option value="👗">👗 Clothes</option><option value="📚">📚 Education</option>
+          <option value="🎉">🎉 Fun</option><option value="🏥">🏥 Health</option><option value="🛍️">🛍️ Shopping</option>
+          <option value="✈️">✈️ Travel</option><option value="🎁">🎁 Gifts</option><option value="❓">❓ Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Type</label>
+        <select id="filterType" onchange="renderTransactions()">
+          <option value="all">All</option><option value="expense">Expenses Only</option><option value="income">Income Only</option>
+        </select>
+      </div>
+      <hr class="divider">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px">
+        <div style="text-align:center"><div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;margin-bottom:3px">In</div><div style="font-size:18px;font-weight:800;color:var(--green)" id="t-totalIn">0</div></div>
+        <div style="text-align:center"><div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;margin-bottom:3px">Out</div><div style="font-size:18px;font-weight:800;color:var(--red)" id="t-totalOut">0</div></div>
+        <div style="text-align:center"><div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;margin-bottom:3px">Net</div><div style="font-size:18px;font-weight:800" id="t-net">0</div></div>
+      </div>
+      <hr class="divider">
+      <button class="btn bgh bf" style="font-size:11px" onclick="exportCSV()">↓ Export to CSV</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec-title">All Transactions</div>
+    <div id="allTransactions"><div style="color:var(--muted);font-size:12px;font-family:'Space Mono',monospace;padding:10px 0">No transactions yet.</div></div>
+  </div>
+</div>
+
+<!-- ══ GOALS ══ -->
+<div class="page" id="page-goals">
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card ay">
+      <div class="sec-title">Add Savings Goal</div>
+      <div class="field"><label>Goal Name</label><input type="text" id="g-name" placeholder="e.g. New Phone, Holiday..."></div>
+      <div class="ir">
+        <div class="field"><label>Target</label><input type="number" id="g-target" placeholder="500"></div>
+        <div class="field"><label>Saved So Far</label><input type="number" id="g-saved" placeholder="0"></div>
+      </div>
+      <div class="ir">
+        <div class="field"><label>Deadline (optional)</label><input type="date" id="g-deadline"></div>
+        <div class="field"><label>Color</label>
+          <select id="g-color">
+            <option value="var(--orange)">🟠 Orange</option><option value="var(--green)">🟢 Green</option>
+            <option value="var(--blue)">🔵 Blue</option><option value="var(--red)">🔴 Red</option>
+            <option value="var(--purple)">🟣 Purple</option><option value="var(--yellow)">🟡 Yellow</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn bo bf" onclick="addGoal()">Add Goal</button>
+    </div>
+    <div class="card ag">
+      <div class="sec-title">Goal Stats</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="stat-card"><div class="sl">Total Goals</div><div class="sv co" id="gs-count">0</div></div>
+        <div class="stat-card"><div class="sl">Completed</div><div class="sv cg" id="gs-done">0</div></div>
+        <div class="stat-card"><div class="sl">Total Saved</div><div class="sv cb" id="gs-saved">0</div></div>
+        <div class="stat-card"><div class="sl">Remaining</div><div class="sv cr" id="gs-left">0</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec-title">Your Goals</div>
+    <div id="goalsList"><div style="color:var(--muted);font-size:12px;font-family:'Space Mono',monospace;padding:10px 0">No goals yet. Add your first goal!</div></div>
+  </div>
+</div>
+
+<!-- ══ CONVERTER ══ -->
+<div class="page" id="page-converter">
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card ab">
+      <div class="sec-title">Currency Converter</div>
+      <div class="field"><label>Amount</label><input type="number" id="cv-amount" value="100"></div>
+      <div class="ir">
+        <div class="field"><label>From</label>
+          <select id="cv-from">
+            <option>AED</option><option>USD</option><option>EUR</option><option>GBP</option><option>JPY</option>
+            <option>CAD</option><option>AUD</option><option>CHF</option><option>SGD</option><option>INR</option>
+            <option>PKR</option><option>SAR</option><option>QAR</option><option>MYR</option><option>TRY</option>
+            <option>KWD</option><option>BHD</option><option>OMR</option><option>EGP</option><option>NGN</option>
+          </select>
+        </div>
+        <div class="field"><label>To</label>
+          <select id="cv-to">
+            <option>USD</option><option>AED</option><option>EUR</option><option>GBP</option><option>JPY</option>
+            <option>CAD</option><option>AUD</option><option>CHF</option><option>SGD</option><option>INR</option>
+            <option>PKR</option><option>SAR</option><option>QAR</option><option>MYR</option><option>TRY</option>
+            <option>KWD</option><option>BHD</option><option>OMR</option><option>EGP</option><option>NGN</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn bb bf" onclick="convertCurrency()">Convert</button>
+      <div style="margin-top:16px;text-align:center">
+        <div style="font-size:34px;font-weight:800;color:var(--blue)" id="cvNum">—</div>
+        <div style="font-size:12px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:3px" id="cvRate"></div>
+      </div>
+    </div>
+    <div class="card ao">
+      <div class="sec-title">Live Rates vs AED</div>
+      <div style="overflow-x:auto"><table class="rate-table"><thead><tr><th>Currency</th><th>Rate</th><th>1 AED =</th></tr></thead><tbody id="rateTableBody"><tr><td colspan="3" style="color:var(--muted)">Loading...</td></tr></tbody></table></div>
+    </div>
+  </div>
+  <div class="card ag">
+    <div class="sec-title">Multi-Currency — See All at Once</div>
+    <div class="ir" style="margin-bottom:12px">
+      <div class="field" style="margin:0"><label>Amount</label><input type="number" id="mc-amount" value="100" oninput="multiConvert()"></div>
+      <div class="field" style="margin:0"><label>Base Currency</label>
+        <select id="mc-base" onchange="multiConvert()"><option>AED</option><option>USD</option><option>EUR</option><option>GBP</option></select>
+      </div>
+    </div>
+    <div id="multiGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px"><div style="color:var(--muted);font-size:12px;font-family:'Space Mono',monospace">Loading rates...</div></div>
+  </div>
+</div>
+
+<!-- ══ TOOLS ══ -->
+<div class="page" id="page-tools">
+  <div class="g2" style="margin-bottom:18px">
+    <!-- CALCULATOR -->
+    <div class="card ar">
+      <div class="sec-title">Advanced Calculator</div>
+      <div class="calc-display"><div class="calc-expr" id="calcExpr"></div><div id="calcDisplay">0</div></div>
+      <div class="calc-grid">
+        <button class="cbtn mem" onclick="memStore()">MS</button>
+        <button class="cbtn mem" onclick="memRecall()">MR</button>
+        <button class="cbtn mem" onclick="memClear()">MC</button>
+        <button class="cbtn clr" onclick="clearCalc()">C</button>
+        <button class="cbtn op" onclick="press('(')">(</button>
+        <button class="cbtn op" onclick="press(')')">)</button>
+        <button class="cbtn op" onclick="press('%')">%</button>
+        <button class="cbtn op" onclick="pressOp('/')">÷</button>
+        <button class="cbtn" onclick="press('7')">7</button><button class="cbtn" onclick="press('8')">8</button><button class="cbtn" onclick="press('9')">9</button>
+        <button class="cbtn op" onclick="pressOp('*')">×</button>
+        <button class="cbtn" onclick="press('4')">4</button><button class="cbtn" onclick="press('5')">5</button><button class="cbtn" onclick="press('6')">6</button>
+        <button class="cbtn op" onclick="pressOp('-')">−</button>
+        <button class="cbtn" onclick="press('1')">1</button><button class="cbtn" onclick="press('2')">2</button><button class="cbtn" onclick="press('3')">3</button>
+        <button class="cbtn op" onclick="pressOp('+')">+</button>
+        <button class="cbtn" onclick="press('0')">0</button><button class="cbtn" onclick="press('.')">.</button>
+        <button class="cbtn op" onclick="backspace()">⌫</button>
+        <button class="cbtn eq" onclick="equals()">=</button>
+        <button class="cbtn op s2" onclick="sqrtCalc()">√x</button>
+        <button class="cbtn op s2" onclick="sqrCalc()">x²</button>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <!-- OWSL -->
+      <div class="card ag">
+        <div class="sec-title">OWSL(C) Translator</div>
+        <div class="field"><label>Text</label><input type="text" id="owslInput" placeholder="Enter text..."></div>
+        <div style="display:flex;gap:7px">
+          <button class="btn bg2" style="flex:1;font-size:12px" onclick="translateOWSL()">Reverse Words</button>
+          <button class="btn bgh" style="flex:1;font-size:12px" onclick="reverseAll()">Flip All</button>
+        </div>
+        <div id="owslOutput" style="margin-top:12px;font-family:'Space Mono',monospace;font-size:13px;color:var(--green);background:var(--surface2);border-radius:8px;padding:10px;min-height:20px"></div>
+      </div>
+
+      <!-- RANDOM -->
+      <div class="card ap">
+        <div class="sec-title">Random Number Generator</div>
+        <div class="ir" style="margin-bottom:10px">
+          <div class="field" style="margin:0"><label>Min</label><input type="number" id="rng-min" value="1"></div>
+          <div class="field" style="margin:0"><label>Max</label><input type="number" id="rng-max" value="100"></div>
+        </div>
+        <button class="btn bgh bf" onclick="generateRandom()">Generate</button>
+        <div style="text-align:center;margin-top:12px"><div style="font-size:50px;font-weight:800;color:var(--purple)" id="rngResult">?</div></div>
+      </div>
+
+      <!-- COMPOUND INTEREST -->
+      <div class="card ab">
+        <div class="sec-title">Compound Interest</div>
+        <div class="ir3">
+          <div class="field" style="margin:0"><label>Principal</label><input type="number" id="ci-p" value="1000" oninput="calcInterest()"></div>
+          <div class="field" style="margin:0"><label>Rate (%/yr)</label><input type="number" id="ci-r" value="5" oninput="calcInterest()"></div>
+          <div class="field" style="margin:0"><label>Years</label><input type="number" id="ci-t" value="5" oninput="calcInterest()"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px">
+          <div class="stat-card"><div class="sl">Final</div><div style="font-size:14px;font-weight:800;color:var(--orange);margin-top:4px" id="ci-final">—</div></div>
+          <div class="stat-card"><div class="sl">Earned</div><div style="font-size:14px;font-weight:800;color:var(--green);margin-top:4px" id="ci-earned">—</div></div>
+          <div class="stat-card"><div class="sl">Growth</div><div style="font-size:14px;font-weight:800;color:var(--blue);margin-top:4px" id="ci-growth">—</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="card ao">
+    <div class="sec-title">Quick Notes</div>
+    <div class="ir" style="margin-bottom:10px">
+      <textarea id="noteInput" placeholder="Write a note, reminder, or tip..." style="height:75px"></textarea>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <button class="btn bo bf" onclick="addNote()">Save Note</button>
+        <button class="btn bgh bf" style="font-size:11px" onclick="clearNotes()">Clear All</button>
+      </div>
+    </div>
+    <div id="notesList"><div style="color:var(--muted);font-size:12px;font-family:'Space Mono',monospace">No notes yet.</div></div>
+  </div>
+</div>
+
+<!-- ══ SETTINGS ══ -->
+<div class="page" id="page-settings">
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card ao">
+      <div class="sec-title">Theme Colors</div>
+      <div class="settings-grid">
+        <div class="color-field"><label>Background</label><input type="color" value="#080808" oninput="document.documentElement.style.setProperty('--black',this.value)"></div>
+        <div class="color-field"><label>Surface</label><input type="color" value="#181818" oninput="document.documentElement.style.setProperty('--surface',this.value)"></div>
+        <div class="color-field"><label>Orange Accent</label><input type="color" value="#ff6b1a" oninput="document.documentElement.style.setProperty('--orange',this.value)"></div>
+        <div class="color-field"><label>Green</label><input type="color" value="#22c55e" oninput="document.documentElement.style.setProperty('--green',this.value)"></div>
+        <div class="color-field"><label>Blue</label><input type="color" value="#3b82f6" oninput="document.documentElement.style.setProperty('--blue',this.value)"></div>
+        <div class="color-field"><label>Red</label><input type="color" value="#ef4444" oninput="document.documentElement.style.setProperty('--red',this.value)"></div>
+      </div>
+    </div>
+    <div class="card ab">
+      <div class="sec-title">Upload Favicon</div>
+      <p style="font-size:12px;color:var(--white-dim);margin-bottom:12px;line-height:1.6">Upload a PNG/ICO image to use as the browser tab icon. It also replaces the logo mark in the top-left.</p>
+      <label class="btn bb bf" for="faviconInput2" style="text-align:center;cursor:pointer;display:block">🖼 Choose Image</label>
+      <input type="file" id="faviconInput2" accept="image/png,image/ico,image/jpeg" style="display:none" onchange="uploadFavicon(event)">
+      <div id="faviconPreview" style="margin-top:12px;display:none;text-align:center">
+        <img id="faviconImg" style="width:46px;height:46px;border-radius:9px;border:1px solid var(--border)">
+        <div style="font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:5px">Applied ✓</div>
+      </div>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card ar">
+      <div class="sec-title">Danger Zone</div>
+      <p style="font-size:12px;color:var(--white-dim);margin-bottom:12px">Clear all data. This cannot be undone.</p>
+      <button class="btn br2 bf" onclick="clearAllData()">🗑 Clear All Data</button>
+    </div>
+    <div class="card ag">
+      <div class="sec-title">App Info</div>
+      <div style="font-size:12px;font-family:'Space Mono',monospace;line-height:2;color:var(--white-dim)">
+        <div>Version: <span style="color:var(--white)">2.0.0</span></div>
+        <div>Developer: <span style="color:var(--orange)">DXB-Gamer</span></div>
+        <div>Transactions: <span id="info-txCount" style="color:var(--white)">0</span></div>
+        <div>Goals: <span id="info-goalCount" style="color:var(--white)">0</span></div>
+        <div>Notes: <span id="info-noteCount" style="color:var(--white)">0</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
 
 <script>
-let chart, display = "";
+let state={transactions:[],goals:[],notes:[],settings:{currency:'AED',monthly:50}};
+let calcStr='',calcExpr='',calcMem=0,rates={},ratesLoaded=false;
+let savingsChart,ringChartInst,catChartInst;
+let tipIdx=0;
 
-async function calculate() {
-    const m = Number(monthlyMoney.value);
-    const base = currency.value;
-    const to = convertTo.value.toUpperCase();
-    let values = [m*6, m*12, m*60, m*120];
-    let label = base;
-    if (to) {
-        try {
-            const r = await fetch(`https://api.exchangerate-api.com/v4/latest/${base}`);
-            const d = await r.json();
-            if (d.rates[to]) {
-                values = values.map(v => (v * d.rates[to]).toFixed(2));
-                label = to;
-            }
-        } catch {}
-    }
-    if (chart) chart.destroy();
-    chart = new Chart(moneyChart, {
-        type: "line",
-        data: {
-            labels: ["6 months", "1 year", "5 years", "10 years"],
-            datasets: [{
-                label: `Savings (${label})`,
-                data: values,
-                borderColor: "#00bfff",
-                backgroundColor: "rgba(0,191,255,0.2)",
-                fill: true,
-                tension: 0.4
-            }]
-        }
-    });
+const TIPS=[
+  "🍔 Pack lunch instead of buying — save 70% on food costs!",
+  "📱 Cancel unused subscriptions — check your bank statement.",
+  "💡 The 24-hour rule: wait a day before any non-essential purchase.",
+  "🎯 Set a weekly cash limit and withdraw it — when it's gone, stop.",
+  "☕ Home coffee vs café = hundreds saved per year.",
+  "📊 Review your spending every Sunday to stay on track.",
+  "🛒 Always write a shopping list — impulse buys kill budgets.",
+  "🎮 Look for free or discounted versions of apps and games.",
+  "✈️ Book travel 6–8 weeks early for the best prices.",
+  "💳 Pay yourself first: save before you spend.",
+  "🏦 Even saving 1 AED a day = 365 AED a year.",
+  "📉 Track every dirham — awareness is the first step to saving.",
+];
+
+function save(){try{localStorage.setItem('pmt2_state',JSON.stringify(state));}catch(e){}}
+function load(){try{const s=localStorage.getItem('pmt2_state');if(s)state={...state,...JSON.parse(s)};}catch(e){}}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  ['dashboard','tracker','goals','converter','tools','settings'].forEach((n,i)=>{
+    if(n===id)document.querySelectorAll('.nav-tab')[i].classList.add('active');
+  });
+  if(id==='converter')loadRates();
 }
 
-function press(v){ display += v; calcDisplay.innerText = display; }
-function clearCalc(){ display = ""; calcDisplay.innerText = "0"; }
-function equals(){ try{ display = eval(display); }catch{ display="Error"; } calcDisplay.innerText = display; }
-
-function translateOWSL(){
-    owslOutput.innerText = owslInput.value
-        .split(" ")
-        .map(w => w.split("").reverse().join(""))
-        .join(" ");
+function toast(msg,color='var(--green)'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.borderColor=color;
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-function setBG(c){ document.documentElement.style.setProperty('--bg-color', c); }
-function setBorder(c){ document.documentElement.style.setProperty('--border-color', c); }
-function setHover(c){ document.documentElement.style.setProperty('--hover-border', c); }
+function uploadFavicon(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=d=>{
+    document.getElementById('faviconEl').href=d.result;
+    const prev=document.getElementById('faviconPreview');
+    const img=document.getElementById('faviconImg');
+    if(prev&&img){img.src=d.result;prev.style.display='block';}
+    document.getElementById('logoMark').innerHTML=`<img src="${d.result}">`;
+    toast('✓ Favicon applied!');
+  };
+  r.readAsDataURL(f);
+}
 
-calculate();
+async function calculate(){
+  const m=Number(document.getElementById('monthlyMoney').value)||0;
+  const base=document.getElementById('currency').value;
+  const to=(document.getElementById('convertTo').value||'').toUpperCase().trim();
+  let vals=[m,m*3,m*6,m*12],lbl=base;
+  if(to&&to!==base){
+    try{const r=await fetch(`https://api.exchangerate-api.com/v4/latest/${base}`);const d=await r.json();if(d.rates[to]){vals=vals.map(v=>+(v*d.rates[to]).toFixed(2));lbl=to;}}catch(e){}
+  }
+  const fmt=v=>lbl+' '+Number(v).toLocaleString(undefined,{maximumFractionDigits:2});
+  document.getElementById('p1m').textContent=fmt(vals[0]);
+  document.getElementById('p3m').textContent=fmt(vals[1]);
+  document.getElementById('p6m').textContent=fmt(vals[2]);
+  document.getElementById('p12m').textContent=fmt(vals[3]);
+  document.getElementById('dash-monthly').textContent=fmt(m);
+  if(savingsChart)savingsChart.destroy();
+  savingsChart=new Chart(document.getElementById('moneyChart'),{
+    type:'line',
+    data:{labels:['1 Month','3 Months','6 Months','1 Year'],datasets:[{label:`Savings (${lbl})`,data:vals,borderColor:'#ff6b1a',backgroundColor:'rgba(255,107,26,0.07)',pointBackgroundColor:'#ff6b1a',pointRadius:5,fill:true,tension:0.4}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#777',font:{family:"'Space Mono'"}}}},scales:{x:{ticks:{color:'#444',font:{family:"'Space Mono'"}},grid:{color:'#1a1a1a'}},y:{ticks:{color:'#444',font:{family:"'Space Mono'"}},grid:{color:'#1a1a1a'}}}}
+  });
+}
+
+function addExpense(type){
+  const name=document.getElementById('q-name').value.trim()||'Unnamed';
+  const amount=parseFloat(document.getElementById('q-amount').value)||0;
+  const cat=document.getElementById('q-cat').value;
+  pushTx({name,amount,cat,type,date:new Date().toISOString().slice(0,10),note:''});
+  document.getElementById('q-name').value='';document.getElementById('q-amount').value='';
+}
+function addTx(type){
+  const name=document.getElementById('t-name').value.trim()||'Unnamed';
+  const amount=parseFloat(document.getElementById('t-amount').value)||0;
+  const cat=document.getElementById('t-cat').value;
+  const date=document.getElementById('t-date').value||new Date().toISOString().slice(0,10);
+  const note=document.getElementById('t-note').value;
+  pushTx({name,amount,cat,type,date,note});
+  document.getElementById('t-name').value='';document.getElementById('t-amount').value='';document.getElementById('t-note').value='';
+}
+function pushTx(tx){
+  tx.id=Date.now();state.transactions.unshift(tx);save();renderAll();
+  toast(tx.type==='income'?`✓ +${tx.amount} income added`:`✓ -${tx.amount} expense added`,tx.type==='income'?'var(--green)':'var(--red)');
+}
+function deleteTx(id){state.transactions=state.transactions.filter(t=>t.id!==id);save();renderAll();toast('Deleted','var(--muted)');}
+
+function renderAll(){renderTransactions();renderRecent();updateDashStats();renderBudgetRing();renderCatChart();renderGoals();updateGoalStats();updateInfoStats();}
+
+function renderTransactions(){
+  const fc=document.getElementById('filterCat').value;
+  const ft=document.getElementById('filterType').value;
+  let txs=state.transactions;
+  if(fc!=='all')txs=txs.filter(t=>t.cat===fc);
+  if(ft!=='all')txs=txs.filter(t=>t.type===ft);
+  let tin=0,tout=0;txs.forEach(t=>t.type==='income'?tin+=t.amount:tout+=t.amount);
+  const net=tin-tout;
+  document.getElementById('t-totalIn').textContent='+'+tin.toFixed(2);
+  document.getElementById('t-totalOut').textContent='-'+tout.toFixed(2);
+  const ne=document.getElementById('t-net');ne.textContent=(net>=0?'+':'')+net.toFixed(2);ne.style.color=net>=0?'var(--green)':'var(--red)';
+  const el=document.getElementById('allTransactions');
+  if(!txs.length){el.innerHTML='<div style="color:var(--muted);font-size:12px;font-family:\'Space Mono\',monospace;padding:10px 0">No transactions match filter.</div>';return;}
+  el.innerHTML=txs.map(t=>txItem(t)).join('');
+}
+function renderRecent(){
+  const el=document.getElementById('recentList');const r=state.transactions.slice(0,5);
+  if(!r.length){el.innerHTML='<div style="color:var(--muted);font-size:12px;font-family:\'Space Mono\',monospace;padding:10px 0">No transactions yet.</div>';return;}
+  el.innerHTML=r.map(t=>txItem(t)).join('');
+}
+function txItem(t){
+  return`<div class="exp-item">
+    <div class="exp-cat" style="background:${t.type==='income'?'rgba(34,197,94,0.13)':'rgba(239,68,68,0.13)'}">${t.cat}</div>
+    <div class="exp-info"><div class="exp-name">${t.name}${t.note?` <span style="color:var(--muted);font-size:10px;font-weight:400">· ${t.note}</span>`:''}</div><div class="exp-date">${t.date}</div></div>
+    <div class="exp-amt ${t.type}">${t.type==='income'?'+':'-'}${t.amount.toFixed(2)}</div>
+    <button class="del-btn" onclick="deleteTx(${t.id})">×</button>
+  </div>`;
+}
+function updateDashStats(){
+  const cur=document.getElementById('currency').value;
+  let inc=0,sp=0;state.transactions.forEach(t=>t.type==='income'?inc+=t.amount:sp+=t.amount);
+  document.getElementById('dash-balance').textContent=cur+' '+(inc-sp).toFixed(2);
+  document.getElementById('dash-spent').textContent=cur+' '+sp.toFixed(2);
+  document.getElementById('dash-saved').textContent=cur+' '+state.goals.reduce((a,g)=>a+(g.saved||0),0).toFixed(2);
+}
+function renderBudgetRing(){
+  const m=Number(document.getElementById('monthlyMoney').value)||0;
+  let sp=0;state.transactions.forEach(t=>{if(t.type==='expense')sp+=t.amount;});
+  const left=Math.max(0,m-sp);const pct=m>0?Math.min(100,Math.round((sp/m)*100)):0;
+  document.getElementById('ringPct').textContent=pct+'%';
+  document.getElementById('leg-spent').textContent=sp.toFixed(2);
+  document.getElementById('leg-left').textContent=left.toFixed(2);
+  if(ringChartInst)ringChartInst.destroy();
+  ringChartInst=new Chart(document.getElementById('ringChart'),{
+    type:'doughnut',
+    data:{datasets:[{data:[sp||0.01,left||0.01],backgroundColor:['#ef4444','#22c55e'],borderWidth:0}]},
+    options:{cutout:'72%',plugins:{legend:{display:false}}}
+  });
+}
+function renderCatChart(){
+  const cats={};state.transactions.filter(t=>t.type==='expense').forEach(t=>{cats[t.cat]=(cats[t.cat]||0)+t.amount;});
+  const labels=Object.keys(cats);const data=Object.values(cats);
+  const colors=['#ff6b1a','#22c55e','#3b82f6','#ef4444','#eab308','#a855f7','#06b6d4','#f97316','#84cc16','#ec4899','#64748b','#10b981'];
+  const el=document.getElementById('catChart');
+  if(catChartInst)catChartInst.destroy();
+  const leg=document.getElementById('catLegend');
+  if(!labels.length){if(el.parentElement)el.parentElement.innerHTML='<div style="color:var(--muted);font-size:12px;font-family:\'Space Mono\',monospace;padding:20px 0;grid-column:span 2">No expense data yet.</div>';return;}
+  catChartInst=new Chart(el,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors.slice(0,labels.length),borderWidth:0}]},options:{cutout:'60%',plugins:{legend:{display:false}}}});
+  const total=data.reduce((a,b)=>a+b,0);
+  leg.innerHTML=labels.map((l,i)=>`<div class="legend-item"><div class="legend-dot" style="background:${colors[i]}"></div><span>${l} — <strong>${data[i].toFixed(2)}</strong> <span style="color:var(--muted)">(${Math.round((data[i]/total)*100)}%)</span></span></div>`).join('');
+}
+
+function addGoal(){
+  const name=document.getElementById('g-name').value.trim();if(!name){toast('Enter a goal name!','var(--red)');return;}
+  const target=parseFloat(document.getElementById('g-target').value)||100;
+  const saved=parseFloat(document.getElementById('g-saved').value)||0;
+  const deadline=document.getElementById('g-deadline').value;
+  const color=document.getElementById('g-color').value;
+  state.goals.push({id:Date.now(),name,target,saved,deadline,color});
+  save();renderGoals();updateGoalStats();toast('✓ Goal added!');
+  document.getElementById('g-name').value='';
+}
+function deleteGoal(id){state.goals=state.goals.filter(g=>g.id!==id);save();renderGoals();updateGoalStats();}
+function addToGoal(id,amt){const g=state.goals.find(g=>g.id===id);if(g){g.saved=Math.min(g.target,g.saved+amt);save();renderGoals();updateGoalStats();toast('✓ Saved to goal!');}}
+function renderGoals(){
+  const el=document.getElementById('goalsList');
+  if(!state.goals.length){el.innerHTML='<div style="color:var(--muted);font-size:12px;font-family:\'Space Mono\',monospace;padding:10px 0">No goals yet.</div>';return;}
+  el.innerHTML=state.goals.map(g=>{
+    const pct=Math.min(100,Math.round((g.saved/g.target)*100));
+    const done=pct>=100;
+    const color=g.color||'var(--orange)';
+    const daysLeft=g.deadline?Math.ceil((new Date(g.deadline)-new Date())/(1000*60*60*24)):null;
+    return`<div class="goal-item">
+      <div class="goal-header">
+        <div><div class="goal-name">${g.name} ${done?'<span class="badge badge-green">✓ Done!</span>':''}</div>
+        <div class="goal-meta">${daysLeft!==null?(daysLeft>0?daysLeft+' days left':'Deadline passed!'):'No deadline'}</div></div>
+        <div style="display:flex;gap:5px;align-items:center">
+          <button class="btn bgh" style="padding:5px 10px;font-size:11px" onclick="addToGoal(${g.id},10)">+10</button>
+          <button class="btn bgh" style="padding:5px 10px;font-size:11px" onclick="addToGoal(${g.id},50)">+50</button>
+          <button class="del-btn" onclick="deleteGoal(${g.id})">×</button>
+        </div>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div class="goal-amts"><span>${g.saved.toFixed(2)} saved</span><span style="color:${color};font-weight:700">${pct}%</span><span>${g.target.toFixed(2)} target</span></div>
+    </div>`;
+  }).join('');
+}
+function updateGoalStats(){
+  document.getElementById('gs-count').textContent=state.goals.length;
+  document.getElementById('gs-done').textContent=state.goals.filter(g=>g.saved>=g.target).length;
+  document.getElementById('gs-saved').textContent=state.goals.reduce((a,g)=>a+g.saved,0).toFixed(2);
+  document.getElementById('gs-left').textContent=Math.max(0,state.goals.reduce((a,g)=>a+(g.target-g.saved),0)).toFixed(2);
+}
+
+async function loadRates(){
+  if(ratesLoaded)return;
+  try{const r=await fetch('https://api.exchangerate-api.com/v4/latest/AED');const d=await r.json();rates=d.rates;ratesLoaded=true;renderRateTable();multiConvert();}
+  catch(e){document.getElementById('rateTableBody').innerHTML='<tr><td colspan="3" style="color:var(--red)">Failed to load</td></tr>';}
+}
+function renderRateTable(){
+  const show=['USD','EUR','GBP','JPY','CAD','AUD','CHF','SGD','INR','PKR','SAR','QAR','KWD','BHD'];
+  document.getElementById('rateTableBody').innerHTML=show.map(c=>{if(!rates[c])return'';return`<tr><td><strong>${c}</strong></td><td>${rates[c].toFixed(4)}</td><td>${(rates[c]/(rates['AED']||1)).toFixed(4)}</td></tr>`;}).join('');
+}
+function convertCurrency(){
+  const amount=parseFloat(document.getElementById('cv-amount').value)||0;
+  const from=document.getElementById('cv-from').value;const to=document.getElementById('cv-to').value;
+  if(!ratesLoaded){loadRates();toast('Loading rates...','var(--blue)');return;}
+  const fr=rates[from]||1;const tr=rates[to]||1;const result=(amount/fr)*tr;
+  document.getElementById('cvNum').textContent=result.toLocaleString(undefined,{maximumFractionDigits:4})+' '+to;
+  document.getElementById('cvRate').textContent=`1 ${from} = ${(tr/fr).toFixed(4)} ${to}`;
+}
+function multiConvert(){
+  if(!ratesLoaded)return;
+  const amount=parseFloat(document.getElementById('mc-amount').value)||0;
+  const base=document.getElementById('mc-base').value;
+  const targets=['USD','EUR','GBP','JPY','CAD','AUD','SGD','INR','PKR','SAR','QAR','AED','CHF','KWD'];
+  const br=rates[base]||1;
+  document.getElementById('multiGrid').innerHTML=targets.map(c=>{
+    if(c===base||!rates[c])return'';
+    const v=(amount/br*rates[c]);
+    return`<div style="background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:10px;text-align:center">
+      <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);margin-bottom:3px">${c}</div>
+      <div style="font-size:16px;font-weight:800">${v.toLocaleString(undefined,{maximumFractionDigits:2})}</div>
+    </div>`;
+  }).join('');
+}
+
+// CALCULATOR
+function press(v){if(calcStr==='Error')calcStr='';calcStr+=v;document.getElementById('calcDisplay').textContent=calcStr||'0';}
+function pressOp(op){if(!calcStr&&calcExpr){calcExpr=calcExpr.slice(0,-1)+op;}else{calcExpr+=calcStr+op;calcStr='';}document.getElementById('calcExpr').textContent=calcExpr;document.getElementById('calcDisplay').textContent='0';}
+function clearCalc(){calcStr='';calcExpr='';document.getElementById('calcDisplay').textContent='0';document.getElementById('calcExpr').textContent='';}
+function backspace(){calcStr=calcStr.slice(0,-1);document.getElementById('calcDisplay').textContent=calcStr||'0';}
+function equals(){try{const e=calcExpr+calcStr;const res=Function('"use strict";return('+e.replace(/%/g,'/100')+')')();document.getElementById('calcExpr').textContent=e+' =';calcStr=String(parseFloat(res.toFixed(10)));calcExpr='';document.getElementById('calcDisplay').textContent=calcStr;}catch{document.getElementById('calcDisplay').textContent='Error';calcStr='Error';}}
+function sqrtCalc(){if(calcStr){calcStr=String(Math.sqrt(parseFloat(calcStr)));document.getElementById('calcDisplay').textContent=calcStr;}}
+function sqrCalc(){if(calcStr){calcStr=String(Math.pow(parseFloat(calcStr),2));document.getElementById('calcDisplay').textContent=calcStr;}}
+function memStore(){calcMem=parseFloat(calcStr)||0;toast('Stored: '+calcMem);}
+function memRecall(){calcStr=String(calcMem);document.getElementById('calcDisplay').textContent=calcStr;}
+function memClear(){calcMem=0;toast('Memory cleared');}
+
+function translateOWSL(){document.getElementById('owslOutput').textContent=document.getElementById('owslInput').value.split(' ').map(w=>w.split('').reverse().join('')).join(' ');}
+function reverseAll(){document.getElementById('owslOutput').textContent=document.getElementById('owslInput').value.split('').reverse().join('');}
+function generateRandom(){const min=parseInt(document.getElementById('rng-min').value)||1;const max=parseInt(document.getElementById('rng-max').value)||100;document.getElementById('rngResult').textContent=Math.floor(Math.random()*(max-min+1))+min;}
+function calcInterest(){const p=parseFloat(document.getElementById('ci-p').value)||0;const r=parseFloat(document.getElementById('ci-r').value)/100||0;const t=parseFloat(document.getElementById('ci-t').value)||0;const final=p*Math.pow(1+r,t);const earned=final-p;document.getElementById('ci-final').textContent=final.toFixed(2);document.getElementById('ci-earned').textContent=earned.toFixed(2);document.getElementById('ci-growth').textContent=p>0?(earned/p*100).toFixed(1)+'%':'—';}
+
+function addNote(){const text=document.getElementById('noteInput').value.trim();if(!text)return;state.notes.unshift({id:Date.now(),text,time:new Date().toLocaleString()});save();renderNotes();document.getElementById('noteInput').value='';toast('✓ Note saved!');}
+function deleteNote(id){state.notes=state.notes.filter(n=>n.id!==id);save();renderNotes();}
+function clearNotes(){if(confirm('Clear all notes?')){state.notes=[];save();renderNotes();}}
+function renderNotes(){
+  const el=document.getElementById('notesList');
+  if(!state.notes.length){el.innerHTML='<div style="color:var(--muted);font-size:12px;font-family:\'Space Mono\',monospace">No notes yet.</div>';return;}
+  el.innerHTML=state.notes.map(n=>`<div class="note-item"><div style="display:flex;justify-content:space-between"><div class="note-text">${n.text}</div><button class="del-btn" onclick="deleteNote(${n.id})">×</button></div><div class="note-time">${n.time}</div></div>`).join('');
+}
+
+function exportCSV(){
+  if(!state.transactions.length){toast('No transactions!','var(--red)');return;}
+  const rows=['Name,Amount,Type,Category,Date,Note',...state.transactions.map(t=>`"${t.name}",${t.amount},${t.type},"${t.cat}",${t.date},"${t.note||''}"`)];
+  const blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pocket-money.csv';a.click();
+  toast('✓ CSV exported!');
+}
+function clearAllData(){if(confirm('Delete ALL data? Cannot undo.')){state.transactions=[];state.goals=[];state.notes=[];save();renderAll();renderNotes();toast('All data cleared.','var(--red)');}}
+function updateInfoStats(){document.getElementById('info-txCount').textContent=state.transactions.length;document.getElementById('info-goalCount').textContent=state.goals.length;document.getElementById('info-noteCount').textContent=state.notes.length;}
+function nextTip(){tipIdx=(tipIdx+1)%TIPS.length;document.getElementById('tipBox').textContent=TIPS[tipIdx];}
+
+// INIT
+load();
+document.getElementById('t-date').value=new Date().toISOString().slice(0,10);
+document.getElementById('tipBox').textContent=TIPS[0];
+renderAll();renderNotes();calcInterest();calculate();
 </script>
-
-</body>
-</html>
-  <!-- # Our Team Section -->
-  <h2 style="color: #1e90ff; text-align: center; margin-top: 50px;">Our Team</h2>
-
-  <!-- # Developers Button -->
-  <a href="https://github.com/DXB-Gamer" target="_blank" class="profile-btn">Developers Profile</a>
-
-  <!-- # Designers/Artists Button (placeholder for later) -->
-  <!-- <a href="https://github.com/DesignerName" target="_blank" class="profile-btn">Creator's Profile</a> -->
-
-  <style>
-    .profile-btn {
-      display: inline-block;
-      padding: 12px 25px;
-      font-weight: bold;
-      color: #fff;
-      text-decoration: none;
-      border: 2px solid #1e90ff;
-      border-radius: 8px;
-      background: linear-gradient(90deg, rgba(30,144,255,0.2), rgba(30,144,255,0.1));
-      box-shadow: 0 0 10px #1e90ff, 0 0 20px #00ffff;
-      transition: all 0.3s ease;
-      margin: 10px;
-    }
-    .profile-btn:hover {
-      color: #00ffff;
-      box-shadow: 0 0 20px #1e90ff, 0 0 40px #00ffff, 0 0 60px #00ffff;
-      transform: scale(1.1);
-    }
-  </style>
-
 </body>
 </html>
