@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -188,6 +187,96 @@
 
     ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--black);}::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:99px;}
     @media(max-width:768px){.g2,.g3,.g4{grid-template-columns:1fr;}.nav-tab span{display:none;}.page{padding:14px;}}
+  
+    /* ── LIGHT MODE ── */
+    body.light {
+      --black:#f5f5f5;
+      --dark:#eeeeee;
+      --surface:#ffffff;
+      --surface2:#f0f0f0;
+      --surface3:#e0e0e0;
+      --border:#d0d0d0;
+      --muted:#888888;
+      --white:#1a1a2e;
+      --white-dim:#444466;
+      --accent-blue:#2563eb;
+      --accent-green:#22c55e;
+      --accent-orange:#f97316;
+      --accent-red:#ef4444;
+      --yellow:#eab308;
+      --purple:#7c3aed;
+      --cyan:#06b6d4;
+    }
+    body.light .topbar { background: rgba(245,245,245,0.97); }
+    body.light .card { box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+    body.light input[type="number"],
+    body.light input[type="text"],
+    body.light input[type="date"],
+    body.light select,
+    body.light textarea { background:#f8f8f8; color:#1a1a2e; }
+    body.light .calc-display { background:#f0f0f0; color:#1a1a2e; }
+    body.light .cbtn { background:#f0f0f0; color:#1a1a2e; }
+    body.light .cbtn.op { background:#e8f0ff; color:#7c3aed; }
+    body.light .cbtn.eq { background:#22c55e; color:#fff; }
+    body.light .exp-item { background:#f8f8f8; }
+    body.light .goal-item { background:#f8f8f8; }
+    body.light .note-item { background:#f8f8f8; }
+    body.light .stat-card { background:#ffffff; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+    body.light .proj-tile { background:#f0f0f0; }
+    body.light .budget-row { background:#f0f0f0; }
+    body.light .rate-table tr:hover td { background:#f0f0f0; }
+    body.light #multiGrid > div { background:#f0f0f0; }
+    body.light .logo-badge { background:#e8e8e8; }
+    body.light .bgh { background:#e8e8e8; color:#444; }
+    body.light ::-webkit-scrollbar-track { background:#f5f5f5; }
+    body.light ::-webkit-scrollbar-thumb { background:#ccc; }
+
+    /* TOGGLE BUTTON */
+    .mode-toggle {
+      display:flex; align-items:center; gap:8px;
+      padding:5px 12px;
+      background:var(--surface2);
+      border:1px solid var(--border);
+      border-radius:20px;
+      cursor:pointer;
+      font-size:12px; font-family:'Space Mono',monospace;
+      color:var(--muted);
+      transition:all 0.2s;
+      margin-left:8px;
+    }
+    .mode-toggle:hover { border-color:var(--purple); color:var(--purple); }
+    .toggle-track {
+      width:36px; height:20px;
+      background:var(--surface3);
+      border-radius:100px;
+      position:relative;
+      transition:background 0.25s;
+      flex-shrink:0;
+    }
+    .toggle-track.on { background:var(--purple); }
+    .toggle-thumb {
+      width:14px; height:14px;
+      background:#fff;
+      border-radius:50%;
+      position:absolute;
+      top:3px; left:3px;
+      transition:transform 0.25s;
+      box-shadow:0 1px 3px rgba(0,0,0,0.3);
+    }
+    .toggle-track.on .toggle-thumb { transform:translateX(16px); }
+
+    /* FOOTER COPYRIGHT */
+    .footer-copyright {
+      text-align:center;
+      padding:20px;
+      font-size:11px;
+      font-family:'Space Mono',monospace;
+      color:var(--muted);
+      border-top:1px solid var(--border);
+      margin-top:32px;
+    }
+    .footer-copyright strong { color:var(--accent-red); }
+
   </style>
 </head>
 <body>
@@ -206,17 +295,15 @@
     <button class="nav-tab" onclick="showPage('tools')">🔧 <span>Tools</span></button>
     <button class="nav-tab" onclick="showPage('settings')">⚙️ <span>Settings</span></button>
   </div>
+
+  <button class="mode-toggle" onclick="toggleMode()" id="modeToggle">
+    <div class="toggle-track" id="toggleTrack"><div class="toggle-thumb"></div></div>
+    <span id="modeLabel">Light</span>
+  </button>
 </div>
 
 <!-- ══════════════ DASHBOARD ══════════════ -->
 <div class="page active" id="page-dashboard">
-
-  <!-- COPYRIGHT NOTICE -->
-  <div class="copyright-banner">
-    <span>🔒</span>
-    <span>This app is <strong>free to use</strong> — but the source code is <strong>protected. Copying or redistributing the code is not permitted.</strong> © DXB-Gamer 2025</span>
-  </div>
-
   <!-- HERO STATS -->
   <div class="g4" style="margin-bottom:18px">
     <div class="stat-card" style="border-top:2px solid var(--accent-blue)"><div class="sl">Monthly Budget</div><div class="sv cblue" id="dash-monthly">AED 50</div><div class="ss">your pocket money</div></div>
@@ -329,9 +416,6 @@
 
 <!-- ══════════════ TRACKER ══════════════ -->
 <div class="page" id="page-tracker">
-  <!-- COPYRIGHT NOTICE -->
-  <div class="copyright-banner"><span>🔒</span><span>Free to use · <strong>Code copying not permitted</strong> · © DXB-Gamer 2025</span></div>
-
   <div class="g2" style="margin-bottom:18px">
     <div class="card ao">
       <div class="sec-title">➕ Add Transaction</div>
@@ -390,7 +474,6 @@
 
 <!-- ══════════════ GOALS ══════════════ -->
 <div class="page" id="page-goals">
-  <div class="copyright-banner"><span>🔒</span><span>Free to use · <strong>Code copying not permitted</strong> · © DXB-Gamer 2025</span></div>
   <div class="g2" style="margin-bottom:18px">
     <div class="card ay">
       <div class="sec-title">🎯 Add Savings Goal</div>
@@ -429,7 +512,6 @@
 
 <!-- ══════════════ CONVERTER ══════════════ -->
 <div class="page" id="page-converter">
-  <div class="copyright-banner"><span>🔒</span><span>Free to use · <strong>Code copying not permitted</strong> · © DXB-Gamer 2025</span></div>
   <div class="g2" style="margin-bottom:18px">
     <div class="card ao">
       <div class="sec-title">💱 Currency Converter</div>
@@ -477,7 +559,6 @@
 
 <!-- ══════════════ TOOLS ══════════════ -->
 <div class="page" id="page-tools">
-  <div class="copyright-banner"><span>🔒</span><span>Free to use · <strong>Code copying not permitted</strong> · © DXB-Gamer 2025</span></div>
   <div class="g2" style="margin-bottom:18px">
     <!-- CALCULATOR — green accent -->
     <div class="card a-calc">
@@ -551,7 +632,6 @@
 
 <!-- ══════════════ SETTINGS ══════════════ -->
 <div class="page" id="page-settings">
-  <div class="copyright-banner"><span>🔒</span><span>Free to use · <strong>Code copying not permitted</strong> · © DXB-Gamer 2025</span></div>
   <div class="g2" style="margin-bottom:18px">
     <!-- SETTINGS — orange accent -->
     <div class="card a-settings">
@@ -568,24 +648,13 @@
         </div>
   </div>
   <div class="g2">
-    <div class="card ar">
-      <div class="sec-title">⚠️ Danger Zone</div>
-      <p style="font-size:12px;color:var(--white-dim);margin-bottom:12px">Permanently delete all transactions, goals, and notes. Cannot be undone.</p>
-      <button class="btn bred bf" onclick="clearAllData()">🗑 Clear All Data</button>
-    </div>
-    <div class="card ag">
-      <div class="sec-title">ℹ️ App Info</div>
-      <div style="font-size:12px;font-family:'Space Mono',monospace;line-height:2.2;color:var(--white-dim)">
-        <div>Version: <span style="color:var(--white)">2.0.0</span></div>
-        <div>Developer: <span style="color:var(--accent-orange)">DXB-Gamer</span></div>
-        <div>License: <span style="color:var(--accent-green)">Free to Use</span></div>
-        <div>Code: <span style="color:var(--accent-red)">Protected — No Copying</span></div>
-        <div>Transactions: <span id="info-txCount" style="color:var(--white)">0</span></div>
-        <div>Goals: <span id="info-goalCount" style="color:var(--white)">0</span></div>
-        <div>Notes: <span id="info-noteCount" style="color:var(--white)">0</span></div>
-      </div>
-    </div>
+        </div>
   </div>
+</div>
+
+
+<div class="footer-copyright">
+  🔒 Pocket Money Tracker is <strong>free to use</strong> — copying or redistributing the code is <strong>not permitted</strong> · © DXB-Gamer 2025
 </div>
 
 <div id="toast"></div>
@@ -687,7 +756,7 @@ function pushTx(tx){
 }
 function deleteTx(id){state.transactions=state.transactions.filter(t=>t.id!==id);save();renderAll();toast('Deleted','var(--muted)');}
 
-function renderAll(){renderTransactions();renderRecent();updateDashStats();renderBudgetRing();renderCatChart();renderGoals();updateGoalStats();updateInfoStats();}
+function renderAll(){renderTransactions();renderRecent();updateDashStats();renderBudgetRing();renderCatChart();renderGoals();updateGoalStats();}
 
 function renderTransactions(){
   const fc=document.getElementById('filterCat').value;
@@ -853,9 +922,27 @@ function exportCSV(){
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pocket-money.csv';a.click();
   toast('✓ CSV exported!');
 }
-function clearAllData(){if(confirm('Delete ALL data? Cannot undo.')){state.transactions=[];state.goals=[];state.notes=[];save();renderAll();renderNotes();toast('All data cleared.','var(--accent-red)');}}
-function updateInfoStats(){document.getElementById('info-txCount').textContent=state.transactions.length;document.getElementById('info-goalCount').textContent=state.goals.length;document.getElementById('info-noteCount').textContent=state.notes.length;}
 function nextTip(){tipIdx=(tipIdx+1)%TIPS.length;document.getElementById('tipBox').textContent=TIPS[tipIdx];}
+
+
+// ── LIGHT MODE TOGGLE ──
+function toggleMode(){
+  const body=document.body;
+  const track=document.getElementById('toggleTrack');
+  const label=document.getElementById('modeLabel');
+  const isLight=body.classList.toggle('light');
+  track.classList.toggle('on', isLight);
+  label.textContent=isLight?'Dark':'Light';
+  try{localStorage.setItem('pmt_mode', isLight?'light':'dark');}catch(e){}
+}
+// Restore saved mode
+try{
+  if(localStorage.getItem('pmt_mode')==='light'){
+    document.body.classList.add('light');
+    document.getElementById('toggleTrack').classList.add('on');
+    document.getElementById('modeLabel').textContent='Dark';
+  }
+}catch(e){}
 
 // INIT
 load();
