@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pocket Money Tracker</title>
-  <link rel="icon" id="faviconEl" href="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAcIBAX/xAAlEAABBAICAwABBQAAAAAAAAABAgMEBQYRAAcSEyExFBUiI5H/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AjLhxsde4phD+DQcjySnyexbm3bdKVwZzUb1vLSpf9LZacL3ikIJKlN/XEpAP1XGFN6T6roo2ei/vck8MImxv1c2OpnxmIf8AMojNN+Px0D1pK1K0FKP8QE/QmXhx+9t9E0lFQW2VY1lSBEj1kK2bpJoK5zUWQW0bcWkBAUHFkBP5IH+4xjXTFZ1PAzSdW5zYJl2i61omdGiqfLbQW46lsNuBKAVBIBWo739+cDhu9pKqOpMJx3DptnU3tTJsJFlKa02lanlp9ZQoHZIQkAnQ1oa5nqs7oz0tOw+4/dpFvZ5WzazpKSFB2MlrxUFLKvJThUpR0R+dEniy4cCg7juDr24l9kuW9Pfy2MisITsCO0W2kuxYgPqjPK8iWkbCCfAKOhoaI3xf57mdPcdRde4dVsympNAmwcsS4gBtx2Q+FpKTslWkp19A1vX3i84cD//Z" type="image/png">
+  <title>Tools</title>
+  <link rel="icon" id="faviconEl" href="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAcCBAgG/8QAJhAAAQQBBAICAgMAAAAAAAAAAQIDBAUGAAcREhMhIjIXIzFhgf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDGWjTD20x/E5WG5JleSV15Zt0ZY8keJLahtEPOJbbHlUhxSlklZ6BCQEtk9j9dMeBths1El0lpkGQX0Kiy6vaeokOqAdjvebxyG3XG2lhRQCCg9UpVyQop450GddGnnnu0mJYTlNBgFhaWd1l0+0WmU3VKb6txlq6RWuF/V109VlRJ6JV9VeuZbt7WYvQ7Zz8oh119jk+BemqYj2UtMhi3bHPMiMvwtKKfRPPUp4/vQUMDzHar8LScDyyPlVXLkW7c+VLqEMviUlttSUJIdUnp9z6+Q5APPsgWb/dnDbC9rrNjG5Yr8Sr0QcRppHVbJcBJMqYvn5EK4UW0ghRABUAD2SGjQaQRvPtXK3ao9z7nGMlk5D0jOWqm3WUMsyGWfGVst8/tCuEn5FHHUcfydcxlGeYVX7N3uC0FjeZLNvbZuxcm2MFEVqD0PP60B1wlavaSeQOFH/Uto0H/2Q==" type="image/png">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
@@ -282,11 +282,58 @@
 </head>
 <body>
 
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    databaseURL: "https://tools-404-default-rtdb.firebaseio.com/"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  window.__db = db;
+  window.__dbRef = ref;
+  window.__dbSet = set;
+  window.__dbGet = get;
+  window.__dbOnValue = onValue;
+  window.__dbReady = true;
+  // Set popup logo after page loads
+  window.addEventListener("load", () => { const el=document.getElementById("popupLogo"); if(el) el.src=document.getElementById("faviconEl").href; });
+
+  // Called after user sets name — syncs state to Firebase
+  window.syncToFirebase = function(userName, stateObj) {
+    if (!window.__db || !userName) return;
+    const userRef = ref(db, 'users/' + userName.replace(/[.#$[\]]/g,'_'));
+    set(userRef, { name: userName, data: stateObj, lastSeen: Date.now() })
+      .catch(e => console.warn('Firebase sync error:', e));
+  };
+
+  // Load from Firebase for a given user
+  window.loadFromFirebase = function(userName, callback) {
+    if (!window.__db || !userName) return;
+    const userRef = ref(db, 'users/' + userName.replace(/[.#$[\]]/g,'_'));
+    get(userRef).then(snap => {
+      if (snap.exists()) {
+        const d = snap.val();
+        if (d.data) callback(d.data);
+      }
+    }).catch(e => console.warn('Firebase load error:', e));
+  };
+</script>
+
+<!-- NAME POPUP OVERLAY -->
+<div id="nameOverlay" style="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.88);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;">
+  <div id="namePopupContent" style="background:#181818;border:1px solid #2a2a2a;border-top:3px solid #3b82f6;border-radius:20px;padding:40px 36px;width:100%;max-width:420px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.6);"></div>
+</div>
+
+
 <div class="topbar">
   <div class="logo">
-    <div class="logo-mark" id="logoMark"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAcIBAX/xAAlEAABBAICAwABBQAAAAAAAAABAgMEBQYRAAcSEyExFBUiI5H/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AjLhxsde4phD+DQcjySnyexbm3bdKVwZzUb1vLSpf9LZacL3ikIJKlN/XEpAP1XGFN6T6roo2ei/vck8MImxv1c2OpnxmIf8AMojNN+Px0D1pK1K0FKP8QE/QmXhx+9t9E0lFQW2VY1lSBEj1kK2bpJoK5zUWQW0bcWkBAUHFkBP5IH+4xjXTFZ1PAzSdW5zYJl2i61omdGiqfLbQW46lsNuBKAVBIBWo739+cDhu9pKqOpMJx3DptnU3tTJsJFlKa02lanlp9ZQoHZIQkAnQ1oa5nqs7oz0tOw+4/dpFvZ5WzazpKSFB2MlrxUFLKvJThUpR0R+dEniy4cCg7juDr24l9kuW9Pfy2MisITsCO0W2kuxYgPqjPK8iWkbCCfAKOhoaI3xf57mdPcdRde4dVsympNAmwcsS4gBtx2Q+FpKTslWkp19A1vX3i84cD//Z" style="width:28px;height:28px;object-fit:cover;border-radius:5px;"></div>
-    <div class="logo-text">Pocket Money Tracker</div>
-    <div class="logo-badge">v2.1.2</div>
+    <div class="logo-mark" id="logoMark"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAcCBAgG/8QAJhAAAQQBBAICAgMAAAAAAAAAAQIDBAUGAAcREhMhIjIXIzFhgf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDGWjTD20x/E5WG5JleSV15Zt0ZY8keJLahtEPOJbbHlUhxSlklZ6BCQEtk9j9dMeBths1El0lpkGQX0Kiy6vaeokOqAdjvebxyG3XG2lhRQCCg9UpVyQop450GddGnnnu0mJYTlNBgFhaWd1l0+0WmU3VKb6txlq6RWuF/V109VlRJ6JV9VeuZbt7WYvQ7Zz8oh119jk+BemqYj2UtMhi3bHPMiMvwtKKfRPPUp4/vQUMDzHar8LScDyyPlVXLkW7c+VLqEMviUlttSUJIdUnp9z6+Q5APPsgWb/dnDbC9rrNjG5Yr8Sr0QcRppHVbJcBJMqYvn5EK4UW0ghRABUAD2SGjQaQRvPtXK3ao9z7nGMlk5D0jOWqm3WUMsyGWfGVst8/tCuEn5FHHUcfydcxlGeYVX7N3uC0FjeZLNvbZuxcm2MFEVqD0PP60B1wlavaSeQOFH/Uto0H/2Q==" style="width:28px;height:28px;object-fit:cover;border-radius:5px;"></div>
+    <div class="logo-text">Tools</div>
+    <div class="logo-badge">v3.1.2</div>
+    <div id="userGreeting" style="font-size:11px;font-family:'Space Mono',monospace;color:var(--muted);margin-left:4px;"></div>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard')">📊 <span>Dashboard</span></button>
@@ -661,9 +708,229 @@
 <div id="toast"></div>
 
 <script>
+
+
+
+// Show greeting in topbar
+function setUserGreeting(name) {
+  const el = document.getElementById('userGreeting');
+  if (el) el.textContent = '👤 ' + name;
+}
+
+// ── USERNAME & FIREBASE ──
+let currentUser = null;   // stored as "DXB-2187"
+let currentDisplayName = null;  // stored as "DXB"
+
+// Generate unique ID checking Firebase for collisions
+async function generateUniqueId(baseName) {
+  let digits = 4;
+  let attempts = 0;
+  while (true) {
+    const max = Math.pow(10, digits);
+    const min = Math.pow(10, digits - 1);
+    const num = Math.floor(min + Math.random() * (max - min));
+    const candidate = baseName + '-' + num;
+    const key = candidate.replace(/[.#$[\]]/g, '_');
+    // Check Firebase if this key exists
+    try {
+      if (window.__dbGet && window.__db && window.__dbRef) {
+        const snap = await window.__dbGet(window.__dbRef(window.__db, 'users/' + key));
+        if (!snap.exists()) return candidate; // unique!
+      } else {
+        return candidate; // Firebase not ready, just use it
+      }
+    } catch(e) {
+      return candidate;
+    }
+    attempts++;
+    // After 20 attempts at current digit length, bump up digits
+    if (attempts > 20) { digits++; attempts = 0; }
+  }
+}
+
+function showRegisterScreen() {
+  document.getElementById('namePopupContent').innerHTML = `
+    <div style="width:52px;height:52px;background:#3b82f6;border-radius:13px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;overflow:hidden;">
+      <img src="${document.getElementById('faviconEl').href}" style="width:42px;height:42px;object-fit:cover;border-radius:9px;">
+    </div>
+    <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#ffffff;margin-bottom:4px;">Welcome to Tools</div>
+    <div style="font-family:'Space Mono',monospace;font-size:11px;color:#555;margin-bottom:24px;">v3.1.2 · by DXB-Gamer</div>
+    <div style="text-align:left;margin-bottom:5px;">
+      <label style="font-family:'Space Mono',monospace;font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1px;">Enter Your Name</label>
+    </div>
+    <input id="regNameInput" type="text" placeholder="e.g. Ahmed, DXB, Sara..."
+      style="width:100%;padding:11px 14px;background:#202020;border:1px solid #2a2a2a;border-radius:9px;color:#fff;font-family:'Space Mono',monospace;font-size:14px;outline:none;margin-bottom:14px;"
+      onkeydown="if(event.key==='Enter')doRegister()"
+      onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='#2a2a2a'"
+    >
+    <button onclick="doRegister()" style="width:100%;padding:12px;background:#3b82f6;border:none;border-radius:9px;color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;cursor:pointer;margin-bottom:10px;"
+      onmouseover="this.style.background='#60a5fa'" onmouseout="this.style.background='#3b82f6'">
+      Create My Account →
+    </button>
+    <div id="regError" style="color:#ef4444;font-family:'Space Mono',monospace;font-size:11px;min-height:14px;margin-bottom:10px;"></div>
+    <button onclick="showLoginScreen()" style="background:none;border:none;color:#555;font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;text-decoration:underline;">
+      Already have an account? Log in →
+    </button>
+    <div style="margin-top:18px;font-family:'Space Mono',monospace;font-size:10px;color:#333;">🔒 Free to use · Code protected · © DXB-Gamer 2025</div>
+  `;
+}
+
+async function doRegister() {
+  const inp = document.getElementById('regNameInput');
+  const val = inp ? inp.value.trim() : '';
+  if (!val) { const e=document.getElementById('regError'); if(e) e.textContent='Please enter a name.'; return; }
+
+  // Disable button while checking
+  const btn = document.querySelector('#namePopupContent button');
+  if (btn) { btn.textContent = 'Generating...'; btn.disabled = true; }
+
+  const displayName = val.charAt(0).toUpperCase() + val.slice(1);
+  const uniqueId = await generateUniqueId(displayName);
+
+  currentUser = uniqueId;
+  currentDisplayName = displayName;
+  try {
+    sessionStorage.setItem('pmt_username', uniqueId);
+    localStorage.setItem('pmt_displayname', displayName);
+  } catch(e){}
+
+  showUniqueIdScreen(uniqueId);
+}
+
+function showUniqueIdScreen(uniqueId) {
+  document.getElementById('namePopupContent').innerHTML = `
+    <div style="width:52px;height:52px;background:#3b82f6;border-radius:13px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;overflow:hidden;">
+      <img src="${document.getElementById('faviconEl').href}" style="width:42px;height:42px;object-fit:cover;border-radius:9px;">
+    </div>
+    <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#ffffff;margin-bottom:4px;">Your Unique Login ID</div>
+    <div style="font-family:'Space Mono',monospace;font-size:11px;color:#555;margin-bottom:22px;">Use this to log in from any device</div>
+
+    <div style="background:#0d1117;border:2px solid #3b82f6;border-radius:12px;padding:20px;margin-bottom:16px;">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Your ID</div>
+      <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#3b82f6;letter-spacing:3px;">${uniqueId}</div>
+    </div>
+
+    <div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:9px;padding:11px 14px;margin-bottom:18px;font-family:'Space Mono',monospace;font-size:11px;color:#eab308;line-height:1.7;text-align:left;">
+      ⚠️ <strong>Save this ID!</strong> You need it to log in from another device. We cannot recover it for you.
+    </div>
+
+    <button onclick="enterApp()" style="width:100%;padding:12px;background:#22c55e;border:none;border-radius:9px;color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;cursor:pointer;"
+      onmouseover="this.style.background='#4ade80'" onmouseout="this.style.background='#22c55e'">
+      ✓ I've Saved It — Enter App
+    </button>
+    <div style="margin-top:18px;font-family:'Space Mono',monospace;font-size:10px;color:#333;">🔒 Free to use · Code protected · © DXB-Gamer 2025</div>
+  `;
+}
+
+function showLoginScreen() {
+  document.getElementById('namePopupContent').innerHTML = `
+    <div style="width:52px;height:52px;background:#3b82f6;border-radius:13px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;overflow:hidden;">
+      <img src="${document.getElementById('faviconEl').href}" style="width:42px;height:42px;object-fit:cover;border-radius:9px;">
+    </div>
+    <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#ffffff;margin-bottom:4px;">Log In</div>
+    <div style="font-family:'Space Mono',monospace;font-size:11px;color:#555;margin-bottom:22px;">Enter your unique ID to access your data</div>
+    <div style="text-align:left;margin-bottom:5px;">
+      <label style="font-family:'Space Mono',monospace;font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1px;">Your Unique ID</label>
+    </div>
+    <input id="loginInput" type="text" placeholder="e.g. Ahmed-2187"
+      style="width:100%;padding:11px 14px;background:#202020;border:1px solid #2a2a2a;border-radius:9px;color:#fff;font-family:'Space Mono',monospace;font-size:14px;outline:none;margin-bottom:14px;"
+      onkeydown="if(event.key==='Enter')doLogin()"
+      onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='#2a2a2a'"
+    >
+    <button onclick="doLogin()" style="width:100%;padding:12px;background:#3b82f6;border:none;border-radius:9px;color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;cursor:pointer;margin-bottom:10px;"
+      onmouseover="this.style.background='#60a5fa'" onmouseout="this.style.background='#3b82f6'">
+      Log In →
+    </button>
+    <div id="loginError" style="color:#ef4444;font-family:'Space Mono',monospace;font-size:11px;min-height:14px;margin-bottom:10px;"></div>
+    <button onclick="showRegisterScreen()" style="background:none;border:none;color:#555;font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;text-decoration:underline;">
+      New here? Create an account →
+    </button>
+    <div style="margin-top:18px;font-family:'Space Mono',monospace;font-size:10px;color:#333;">🔒 Free to use · Code protected · © DXB-Gamer 2025</div>
+  `;
+}
+
+function doLogin() {
+  const val = (document.getElementById('loginInput').value || '').trim();
+  if (!val) { document.getElementById('loginError').textContent = 'Please enter your unique ID.'; return; }
+  if (!val.includes('-')) { document.getElementById('loginError').textContent = 'Format: Name-1234 (e.g. Ahmed-2187)'; return; }
+
+  currentUser = val;
+  currentDisplayName = val.split('-')[0];
+  try { sessionStorage.setItem('pmt_username', val); sessionStorage.setItem('pmt_displayname', currentDisplayName); } catch(e){}
+
+  document.getElementById('nameOverlay').style.display = 'none';
+
+  if (window.loadFromFirebase) {
+    window.loadFromFirebase(val, function(data) {
+      if (data) {
+        state = {...state, ...data};
+        renderAll(); renderNotes();
+        toast('✓ Welcome back, ' + val + '!', 'var(--accent-green)');
+      } else {
+        toast('👋 Hi ' + val + '! No data found — starting fresh.', 'var(--accent-blue)');
+      }
+    });
+  }
+  updateGreeting();
+}
+
+function enterApp() {
+  document.getElementById('nameOverlay').style.display = 'none';
+  setTimeout(() => toast('👋 Welcome, ' + currentUser + '!', 'var(--accent-blue)'), 300);
+  updateGreeting();
+}
+
+function updateGreeting() {
+  const greet = document.getElementById('userGreeting');
+  if (greet && currentUser) greet.textContent = '👤 ' + currentUser;
+  // Update settings account card
+  renderAccountCard();
+}
+
+function renderAccountCard() {
+  const el = document.getElementById('accountCard');
+  if (!el) return;
+  if (currentUser) {
+    el.innerHTML = `
+      <div class="sec-title">👤 Your Account</div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px;">
+        <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Display Name</div>
+        <div style="font-size:18px;font-weight:800;">${currentDisplayName || currentUser.split('-')[0]}</div>
+      </div>
+      <div style="background:var(--surface2);border:2px solid var(--accent-blue);border-radius:10px;padding:16px;margin-bottom:14px;">
+        <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Your Unique Login ID</div>
+        <div style="font-size:20px;font-weight:800;color:var(--accent-blue);font-family:'Space Mono',monospace;letter-spacing:2px;">${currentUser}</div>
+        <div style="font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:6px;">Use this to log in from any device</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;font-family:'Space Mono',monospace;font-size:12px;line-height:2;color:var(--white-dim);">
+        <div>Transactions: <strong style="color:var(--white)">${state.transactions.length}</strong></div>
+        <div>Goals: <strong style="color:var(--white)">${state.goals.length}</strong></div>
+        <div>Notes: <strong style="color:var(--white)">${state.notes.length}</strong></div>
+        <div>Storage: <strong style="color:var(--accent-green)">☁️ Firebase Cloud</strong></div>
+      </div>
+      <button onclick="logOut()" style="width:100%;padding:10px;background:var(--surface2);border:1px solid var(--accent-red);border-radius:9px;color:var(--accent-red);font-family:'Syne',sans-serif;font-weight:800;font-size:13px;cursor:pointer;"
+        onmouseover="this.style.background='var(--accent-red)';this.style.color='#fff'" onmouseout="this.style.background='var(--surface2)';this.style.color='var(--accent-red)'">
+        Log Out
+      </button>
+    `;
+  } else {
+    el.innerHTML = `<div class="sec-title">👤 Your Account</div><div style="color:var(--muted);font-size:12px;font-family:'Space Mono',monospace;">Not logged in.</div>`;
+  }
+}
+
+function logOut() {
+  if (!confirm('Log out? Your data is saved to the cloud.')) return;
+  currentUser = null; currentDisplayName = null;
+  try { sessionStorage.removeItem('pmt_username'); sessionStorage.removeItem('pmt_displayname'); } catch(e){}
+  document.getElementById('nameOverlay').style.display = 'flex';
+  showRegisterScreen();
+  toast('Logged out.', 'var(--muted)');
+}
+
+
 // ── FAVICON CONSTANTS ──
-const DARK_FAVICON = "data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAcIBAX/xAAlEAABBAICAwABBQAAAAAAAAABAgMEBQYRAAcSEyExFBUiI5H/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AjLhxsde4phD+DQcjySnyexbm3bdKVwZzUb1vLSpf9LZacL3ikIJKlN/XEpAP1XGFN6T6roo2ei/vck8MImxv1c2OpnxmIf8AMojNN+Px0D1pK1K0FKP8QE/QmXhx+9t9E0lFQW2VY1lSBEj1kK2bpJoK5zUWQW0bcWkBAUHFkBP5IH+4xjXTFZ1PAzSdW5zYJl2i61omdGiqfLbQW46lsNuBKAVBIBWo739+cDhu9pKqOpMJx3DptnU3tTJsJFlKa02lanlp9ZQoHZIQkAnQ1oa5nqs7oz0tOw+4/dpFvZ5WzazpKSFB2MlrxUFLKvJThUpR0R+dEniy4cCg7juDr24l9kuW9Pfy2MisITsCO0W2kuxYgPqjPK8iWkbCCfAKOhoaI3xf57mdPcdRde4dVsympNAmwcsS4gBtx2Q+FpKTslWkp19A1vX3i84cD//Z";
-const LIGHT_FAVICON = "data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAABAcIBQb/xAAmEAABBAICAgIBBQAAAAAAAAABAgMEBQYRAAcSIROxMRQVIiOR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANe0FRWUNNFp6eEzCgRGktMMMoCUoSBoeh98dyT9hZXm7GdTscxu4xiuchUjl0EToLsn5GUKSj+5wOthnyUVgBKXPTalEj0nk9hd2dqXsnAjQUWN+ebwpP6SE+l7yhrY8QuS655e2ifkUEJTspSP5Eq9Bprgb+orL6mlU9xCZmwJbSmn2HkBSVpI0fR++RDqTva7vb+pxXJcVWZcmzm1Ll3CIRBdlRw4vTaFErKS2gEq/AJ/xpybuiz7Yn4XBssGr1RKtFk6BBkyksBx0obaU4XGytZCSokISNa9e+B22urU3HbebZFmMKstqK2jV8etiu7cUhLKFfJ5pI0AVqJA2d7O+ItcEvB3VBzCn/aY9RWYo9VQYygUlqSp3ySUoCfFLYSlI2D+NgDnv6C3rL6mi3FPNZmwJbSXWH2VhSVpI2PY+uO4GfKfp/sKoidbN1FxQRH8dgTWp8h0OOqalSyPlksp8QHV6KwPMpGzs7B1yg4FhlxT9u9hZjaPRXY1+a9uuDayXG2o7BQoKGgE7Urfonet+uULgb+3rKGmlXFxNZhQIjSnX33lhKUJA2fZ+uB//9k=";
+const DARK_FAVICON = "data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAcCBAgG/8QAJhAAAQQBBAICAgMAAAAAAAAAAQIDBAUGAAcREhMhIjIXIzFhgf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDGWjTD20x/E5WG5JleSV15Zt0ZY8keJLahtEPOJbbHlUhxSlklZ6BCQEtk9j9dMeBths1El0lpkGQX0Kiy6vaeokOqAdjvebxyG3XG2lhRQCCg9UpVyQop450GddGnnnu0mJYTlNBgFhaWd1l0+0WmU3VKb6txlq6RWuF/V109VlRJ6JV9VeuZbt7WYvQ7Zz8oh119jk+BemqYj2UtMhi3bHPMiMvwtKKfRPPUp4/vQUMDzHar8LScDyyPlVXLkW7c+VLqEMviUlttSUJIdUnp9z6+Q5APPsgWb/dnDbC9rrNjG5Yr8Sr0QcRppHVbJcBJMqYvn5EK4UW0ghRABUAD2SGjQaQRvPtXK3ao9z7nGMlk5D0jOWqm3WUMsyGWfGVst8/tCuEn5FHHUcfydcxlGeYVX7N3uC0FjeZLNvbZuxcm2MFEVqD0PP60B1wlavaSeQOFH/Uto0H/2Q==";
+const LIGHT_FAVICON = "data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAABAcIAgb/xAAnEAABBAIBBAIBBQAAAAAAAAABAgMEBQYRBwASEyEysSIXIzFhgf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDXtBUVlDTRaenhMwoERpLTDDKAlKEgaHoffTup5yXkGWRcyxvFMbsaOscvA/45EuI7MdBZbU44fElbaUoACB3laiVOAdo+XU4n8n8zS4l3V4/j1DNvcRsHWb1bSSWpDPh8kdxptx1BSF6UFjuUpOgUhW9dBoroN/UVl9TSqe4hMzYEtpTT7DyApK0kaPo/fUawPlvLc2xbIM/r6urpcRgVaFRXLVLnc5JQnvlO7R8mmh3oCQB3qT8k+9c8R8p5RfcmQMXm2NDkcCfRC1fkVsRUd+ocOtR5KPM6kK9ga7grf9dA/PMO5V/WqNnmJyMVs4keocgRYlut5gxVOLSpagWkq7/iPf4nRI16BJqDibMoFFY1j+SRDYZbYLnZdcx+5DwbIAEWGjX4gp2nyKIKQSQkkgJsNBb1l9TRbinmszYEtpLrD7KwpK0kbHsfXTugzevhflSLxLecYU2UY1Gx7vkt1SXGnlvPR3nvIEPOa/aKdqH4he+47/gdeoxfA82sOZKLOr+uo8ahUVS5XNwq6cuU7O7xrbi/E2AhPpQGidpH+WjoN/b1lDTSri4mswoERpTr77ywlKEgbPs/XQf/2Q==";
 
 // ── STATE ──
 let state={transactions:[],goals:[],notes:[]};
@@ -686,7 +953,10 @@ const TIPS=[
   "📉 Track every dirham — awareness is the first step to saving.",
 ];
 
-function save(){try{localStorage.setItem('pmt3_state',JSON.stringify(state));}catch(e){}}
+function save(){
+  try{localStorage.setItem('pmt3_state',JSON.stringify(state));}catch(e){}
+  if(currentUser && window.syncToFirebase) window.syncToFirebase(currentUser, state);
+}
 function load(){try{const s=localStorage.getItem('pmt3_state');if(s)state={...state,...JSON.parse(s)};}catch(e){}}
 
 function showPage(id){
@@ -959,6 +1229,28 @@ try{
 
 // INIT
 load();
+// Check if user already entered name this session
+// Show register screen by default
+showRegisterScreen();
+try {
+  const savedUser = sessionStorage.getItem('pmt_username');
+  if (savedUser) {
+    currentUser = savedUser;
+    currentDisplayName = sessionStorage.getItem('pmt_displayname') || savedUser.split('-')[0];
+    document.getElementById('nameOverlay').style.display = 'none';
+    setTimeout(() => {
+      if (window.loadFromFirebase) {
+        window.loadFromFirebase(savedUser, function(data) {
+          if (data) { state = {...state, ...data}; renderAll(); renderNotes(); }
+        });
+      }
+    }, 1500);
+    setTimeout(() => toast('👋 Welcome back, ' + savedUser + '!', 'var(--accent-blue)'), 400);
+    updateGreeting();
+  }
+} catch(e) {}
+setTimeout(renderAccountCard, 500);
+
 document.getElementById('t-date').value=new Date().toISOString().slice(0,10);
 document.getElementById('tipBox').textContent=TIPS[0];
 renderAll();renderNotes();calcInterest();calculate();
