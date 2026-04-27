@@ -890,31 +890,73 @@ function updateGreeting() {
 function renderAccountCard() {
   const el = document.getElementById('accountCard');
   if (!el) return;
+  const name = currentDisplayName || (currentUser ? currentUser.split('-')[0] : '—');
+  const id = currentUser || '—';
+  const joined = currentUser ? new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'}) : '—';
   if (currentUser) {
     el.innerHTML = `
-      <div class="sec-title">👤 Your Account</div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px;">
-        <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Display Name</div>
-        <div style="font-size:18px;font-weight:800;">${currentDisplayName || currentUser.split('-')[0]}</div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+        <div style="width:52px;height:52px;background:var(--accent-blue);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;font-family:'Space Mono',monospace;flex-shrink:0;">
+          ${name.charAt(0).toUpperCase()}
+        </div>
+        <div>
+          <div style="font-size:20px;font-weight:800;">${name}</div>
+          <div style="font-size:11px;font-family:'Space Mono',monospace;color:var(--muted);margin-top:2px;">Active session</div>
+        </div>
+        <div style="margin-left:auto;"><span style="background:rgba(34,197,94,0.12);color:var(--accent-green);font-size:10px;font-family:'Space Mono',monospace;font-weight:700;padding:4px 10px;border-radius:100px;border:1px solid rgba(34,197,94,0.25);">● Online</span></div>
       </div>
-      <div style="background:var(--surface2);border:2px solid var(--accent-blue);border-radius:10px;padding:16px;margin-bottom:14px;">
-        <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Your Unique Login ID</div>
-        <div style="font-size:20px;font-weight:800;color:var(--accent-blue);font-family:'Space Mono',monospace;letter-spacing:2px;">${currentUser}</div>
-        <div style="font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:6px;">Use this to log in from any device</div>
+
+      <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Account Info</div>
+
+      <div style="display:grid;gap:8px;margin-bottom:16px;">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Display Name</div>
+          <div style="font-size:14px;font-weight:800;">${name}</div>
+        </div>
+        <div style="background:var(--surface2);border:2px solid var(--accent-blue);border-radius:10px;padding:13px 16px;">
+          <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">🔑 Your Unique Login ID</div>
+          <div style="font-size:22px;font-weight:800;color:var(--accent-blue);font-family:'Space Mono',monospace;letter-spacing:2px;">${id}</div>
+          <div style="font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:5px;">Enter this exact ID to log in from any device or browser</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Storage</div>
+          <div style="font-size:12px;font-weight:700;color:var(--accent-green);font-family:'Space Mono',monospace;">☁️ Firebase Cloud</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Session Started</div>
+          <div style="font-size:12px;font-weight:700;font-family:'Space Mono',monospace;">${joined}</div>
+        </div>
       </div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;font-family:'Space Mono',monospace;font-size:12px;line-height:2;color:var(--white-dim);">
-        <div>Transactions: <strong style="color:var(--white)">${state.transactions.length}</strong></div>
-        <div>Goals: <strong style="color:var(--white)">${state.goals.length}</strong></div>
-        <div>Notes: <strong style="color:var(--white)">${state.notes.length}</strong></div>
-        <div>Storage: <strong style="color:var(--accent-green)">☁️ Firebase Cloud</strong></div>
+
+      <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Your Data</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--accent-green);">${state.goals.length}</div>
+          <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;margin-top:3px;">Goals</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--accent-orange);">${state.notes.length}</div>
+          <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;margin-top:3px;">Notes</div>
+        </div>
       </div>
-      <button onclick="logOut()" style="width:100%;padding:10px;background:var(--surface2);border:1px solid var(--accent-red);border-radius:9px;color:var(--accent-red);font-family:'Syne',sans-serif;font-weight:800;font-size:13px;cursor:pointer;"
-        onmouseover="this.style.background='var(--accent-red)';this.style.color='#fff'" onmouseout="this.style.background='var(--surface2)';this.style.color='var(--accent-red)'">
-        Log Out
+
+      <div style="background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.2);border-radius:9px;padding:11px 14px;margin-bottom:14px;font-family:'Space Mono',monospace;font-size:11px;color:#eab308;line-height:1.6;">
+        ⚠️ Your login ID is <strong>${id}</strong> — save it somewhere safe. You need it every time you open the app.
+      </div>
+
+      <button onclick="logOut()" style="width:100%;padding:11px;background:transparent;border:1px solid var(--accent-red);border-radius:9px;color:var(--accent-red);font-family:'Syne',sans-serif;font-weight:800;font-size:13px;cursor:pointer;transition:all 0.15s;"
+        onmouseover="this.style.background='var(--accent-red)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--accent-red)'">
+        ↩ Log Out
       </button>
     `;
   } else {
-    el.innerHTML = `<div class="sec-title">👤 Your Account</div><div style="color:var(--muted);font-size:12px;font-family:'Space Mono',monospace;">Not logged in.</div>`;
+    el.innerHTML = `
+      <div style="text-align:center;padding:20px 0;">
+        <div style="font-size:36px;margin-bottom:10px;">🔒</div>
+        <div style="font-size:15px;font-weight:800;margin-bottom:6px;">Not Logged In</div>
+        <div style="font-size:12px;font-family:'Space Mono',monospace;color:var(--muted);">Log in to see your account info here.</div>
+      </div>
+    `;
   }
 }
 
