@@ -802,28 +802,91 @@ async function doRegister() {
 }
 
 function showUniqueIdScreen(uniqueId) {
+  // Split into name part and number part so user can edit just the number
+  const parts = uniqueId.split('-');
+  const namePart = parts[0];           // e.g. "DXB"
+  const numPart  = parts.slice(1).join('-'); // e.g. "6541"
+
   document.getElementById('namePopupContent').innerHTML = `
     <div style="width:52px;height:52px;background:#3b82f6;border-radius:13px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;overflow:hidden;">
       <img src="${document.getElementById('faviconEl').href}" style="width:42px;height:42px;object-fit:cover;border-radius:9px;">
     </div>
     <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#ffffff;margin-bottom:4px;">Your Unique Login ID</div>
-    <div style="font-family:'Space Mono',monospace;font-size:11px;color:#555;margin-bottom:22px;">Use this to log in from any device</div>
+    <div style="font-family:'Space Mono',monospace;font-size:11px;color:#555;margin-bottom:20px;">You can change the number part to anything you like — one time only</div>
 
-    <div style="background:#0d1117;border:2px solid #3b82f6;border-radius:12px;padding:20px;margin-bottom:16px;">
-      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Your ID</div>
-      <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#3b82f6;letter-spacing:3px;">${uniqueId}</div>
+    <div style="background:#0d1117;border:2px solid #3b82f6;border-radius:12px;padding:18px;margin-bottom:14px;">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Your ID</div>
+      <div style="display:flex;align-items:center;gap:0;justify-content:center;">
+        <div style="font-family:'Space Mono',monospace;font-size:26px;font-weight:700;color:#3b82f6;letter-spacing:2px;">${namePart}-</div>
+        <input id="customNumInput" type="text" value="${numPart}"
+          maxlength="8"
+          style="width:120px;background:transparent;border:none;border-bottom:2px solid #3b82f6;color:#3b82f6;font-family:'Space Mono',monospace;font-size:26px;font-weight:700;letter-spacing:2px;outline:none;text-align:left;padding:0 4px;"
+          oninput="validateCustomNum(this)"
+        >
+      </div>
+      <div id="numHint" style="font-family:'Space Mono',monospace;font-size:10px;color:#555;margin-top:8px;">Only digits allowed · 4–8 digits</div>
     </div>
 
-    <div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:9px;padding:11px 14px;margin-bottom:18px;font-family:'Space Mono',monospace;font-size:11px;color:#eab308;line-height:1.7;text-align:left;">
-      ⚠️ <strong>Save this ID!</strong> You need it to log in from another device. We cannot recover it for you.
+    <div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:9px;padding:11px 14px;margin-bottom:16px;font-family:'Space Mono',monospace;font-size:11px;color:#eab308;line-height:1.7;text-align:left;">
+      ⚠️ <strong>Save this ID!</strong> You need it every time you open the app. We cannot recover it.
     </div>
 
-    <button onclick="enterApp()" style="width:100%;padding:12px;background:#22c55e;border:none;border-radius:9px;color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;cursor:pointer;"
+    <button onclick="confirmCustomId('${namePart}')" style="width:100%;padding:12px;background:#22c55e;border:none;border-radius:9px;color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;cursor:pointer;"
       onmouseover="this.style.background='#4ade80'" onmouseout="this.style.background='#22c55e'">
       ✓ I've Saved It — Enter App
     </button>
-    <div style="margin-top:18px;font-family:'Space Mono',monospace;font-size:10px;color:#333;">🔒 Free to use · Code protected · © DXB-Gamer 2025</div>
+    <div id="idError" style="color:#ef4444;font-family:'Space Mono',monospace;font-size:11px;margin-top:8px;min-height:14px;"></div>
+    <div style="margin-top:14px;font-family:'Space Mono',monospace;font-size:10px;color:#333;">🔒 Free to use · Code protected · © DXB-Gamer 2025</div>
   `;
+}
+
+function validateCustomNum(inp) {
+  // Strip non-digits
+  inp.value = inp.value.replace(/[^0-9]/g, '');
+  const hint = document.getElementById('numHint');
+  const len = inp.value.length;
+  if (len < 4) {
+    hint.style.color = '#ef4444';
+    hint.textContent = 'Minimum 4 digits';
+  } else {
+    hint.style.color = '#22c55e';
+    hint.textContent = '✓ ' + (inp.value ? document.getElementById('customNumInput').closest('div').querySelector('div').textContent.split('-')[0].trim() : '') + '-' + inp.value + ' looks good!';
+  }
+}
+
+async function confirmCustomId(namePart) {
+  const inp = document.getElementById('customNumInput');
+  const num = inp ? inp.value.trim() : '';
+  const errEl = document.getElementById('idError');
+
+  if (!num || num.length < 4 || !/^\d+$/.test(num)) {
+    if (errEl) errEl.textContent = 'Enter at least 4 digits for your number.';
+    return;
+  }
+
+  const finalId = namePart + '-' + num;
+
+  // Check Firebase — make sure this ID isn't taken
+  const key = finalId.replace(/[.#$[\]]/g, '_');
+  try {
+    if (window.__dbGet && window.__db && window.__dbRef) {
+      const snap = await window.__dbGet(window.__dbRef(window.__db, 'users/' + key));
+      if (snap.exists()) {
+        if (errEl) errEl.textContent = '❌ ' + finalId + ' is already taken! Choose a different number.';
+        return;
+      }
+    }
+  } catch(e) {}
+
+  // All good — set as current user
+  currentUser = finalId;
+  currentDisplayName = namePart;
+  try {
+    sessionStorage.setItem('pmt_username', finalId);
+    sessionStorage.setItem('pmt_displayname', namePart);
+  } catch(e) {}
+
+  enterApp();
 }
 
 function showLoginScreen() {
@@ -1024,15 +1087,17 @@ function toast(msg,color='var(--accent-green)'){
 // Sync budget input with monthly money input
 function syncBudget(){
   const v=document.getElementById('budgetInput').value;
+  state.budget=Number(v)||0;
   document.getElementById('monthlyMoney').value=v;
   document.getElementById('budgetCurrency').textContent=document.getElementById('currency').value;
-  renderBudgetRing();calculate();
+  save();renderBudgetRing();calculate();
 }
 
 async function calculate(){
   const m=Number(document.getElementById('monthlyMoney').value)||0;
-  // keep budget input in sync
-  if(document.getElementById('budgetInput').value!=m) document.getElementById('budgetInput').value=m;
+  // sync budget only if user hasn't separately set it
+  const budgetEl=document.getElementById('budgetInput');
+  if(budgetEl && (budgetEl.value==='' || budgetEl.value==='0')) budgetEl.value=m;
   document.getElementById('budgetCurrency').textContent=document.getElementById('currency').value;
   const base=document.getElementById('currency').value;
   const to=(document.getElementById('convertTo').value||'').toUpperCase().trim();
@@ -1060,7 +1125,6 @@ function addExpense(type){
   const amount=parseFloat(document.getElementById('q-amount').value)||0;
   const cat=document.getElementById('q-cat').value;
   pushTx({name,amount,cat,type,date:new Date().toISOString().slice(0,10),note:''});
-  document.getElementById('q-name').value='';document.getElementById('q-amount').value='';
 }
 function addTx(type){
   const name=document.getElementById('t-name').value.trim()||'Unnamed';
@@ -1115,7 +1179,8 @@ function updateDashStats(){
   document.getElementById('dash-saved').textContent=cur+' '+state.goals.reduce((a,g)=>a+(g.saved||0),0).toFixed(2);
 }
 function renderBudgetRing(){
-  const m=Number(document.getElementById('budgetInput').value)||Number(document.getElementById('monthlyMoney').value)||0;
+  // Use state.budget so it never resets between transactions
+  const m=state.budget||Number(document.getElementById('budgetInput').value)||Number(document.getElementById('monthlyMoney').value)||0;
   let sp=0;state.transactions.forEach(t=>{if(t.type==='expense')sp+=t.amount;});
   const left=Math.max(0,m-sp);const pct=m>0?Math.min(100,Math.round((sp/m)*100)):0;
   document.getElementById('ringPct').textContent=pct+'%';
@@ -1299,6 +1364,13 @@ setTimeout(renderAccountCard, 500);
 
 document.getElementById('t-date').value=new Date().toISOString().slice(0,10);
 document.getElementById('tipBox').textContent=TIPS[0];
+// Restore saved budget
+if(state.budget){
+  const budgetEl=document.getElementById('budgetInput');
+  const monthlyEl=document.getElementById('monthlyMoney');
+  if(budgetEl) budgetEl.value=state.budget;
+  if(monthlyEl) monthlyEl.value=state.budget;
+}
 renderAll();renderNotes();calcInterest();calculate();
 </script>
 </body>
