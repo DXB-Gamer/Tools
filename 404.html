@@ -1,11 +1,112 @@
 <!DOCTYPE html>
-<htmllang=en>
-  <html>
-  <head>
-    <title>404 Error</title>
-  </head>
-  <main style="background-color:cornflowerblue">
-    <p style="text-align:Center">Yes..<br> hmm.. <br> okay.. <br> Yeah It's not here....<br><a href="dxb-gamer.github.io/Tools/" target="_blank">Click here to Visit oringial site (and not an error lol)</a></p>
-  </main>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>404 - Page Not Found</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1220;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .box {
+      text-align: center;
+      max-width: 520px;
+      padding: 40px;
+    }
+
+    .code {
+      font-size: 52px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #f9fafb;
+      letter-spacing: 2px;
+    }
+
+    .text {
+      font-size: 16px;
+      color: #9ca3af;
+      line-height: 1.8;
+      min-height: 140px;
+    }
+
+    .line {
+      opacity: 0;
+      transform: translateY(6px);
+      transition: 0.4s ease;
+    }
+
+    .line.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 18px;
+      background: #1f2937;
+      color: #e5e7eb;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 1px solid #374151;
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    a.show {
+      opacity: 1;
+    }
+
+    a:hover {
+      background: #111827;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="code">404</div>
+
+    <div class="text">
+      <div class="line" id="l1">hmm...</div>
+      <div class="line" id="l2">Yes...</div>
+      <div class="line" id="l3">aha...</div>
+      <div class="line" id="l4">no....</div>
+      <div class="line" id="l5">Yeah, the page you're looking for is not here.</div>
+      <div class="line" id="l6">So click below to go to the site!</div>
+    </div>
+
+    <a id="btn" href="https://dxb-gamer.github.io/Tools/" target="_blank">Go to homepage</a>
+  </div>
+
+  <script>
+    const lines = [
+      "l1","l2","l3","l4","l5","l6"
+    ];
+
+    let i = 0;
+
+    function showLines() {
+      if (i < lines.length) {
+        document.getElementById(lines[i]).classList.add("show");
+        i++;
+        setTimeout(showLines, 600);
+      } else {
+        document.getElementById("btn").classList.add("show");
+      }
+    }
+
+    setTimeout(showLines, 500);
+  </script>
+</body>
 </html>
-</htmllang>
